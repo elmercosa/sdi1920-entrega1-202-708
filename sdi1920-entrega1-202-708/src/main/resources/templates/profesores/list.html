@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head" />
+<body>
+	<nav th:replace="fragments/nav" />
+
+
+
+	<div class="container">
+		<h2>Profesores</h2>
+		<p>Los profesores que actualmente figuran en el sistema son los
+			siguientes:</p>
+		<div class="table-responsive">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th class="col-md-1">id</th>
+						<th>DNI</th>
+						<th>Nombre</th>
+						<th>Apellidos</th>
+						<th>Categoria</th>
+						<th class="col-md-1"></th>
+						<th class="col-md-1"></th>
+						<th class="col-md-1"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="profesor : ${profesorList}">
+						<td th:text="${profesor.id}">1</td>
+						<td th:text="${profesor.dni}">Ejercicio 1</td>
+						<td th:text="${profesor.nombre}">10</td>
+						<td th:text="${profesor.apellidos}">10</td>
+						<td th:text="${profesor.categoria}">10</td>
+						<td><a th:href="${'/profesor/details/' + profesor.id}">detalles</a></td>
+						<td><a th:href="${'/profesor/edit/' + profesor.id}">modificar</a></td>
+						<td><a th:href="${'/profesor/delete/' + profesor.id}">eliminar</a></td>
+						<td><form class="form-horizontal" method="post"
+								th:action="${'/profesor/edit'}">
+								<div class="form-group">
+									<div class="col-sm-10">
+										<input th:value="${profesor.id}" type="text"
+											class="form-control hidden" name="id" required="true" />
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-offset-2 col-sm-10">
+										<button type="submit" class="btn btn-primary">Modificar</button>
+									</div>
+								</div>
+							</form></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<footer th:replace="fragments/footer" />
+</body>
+</html>
