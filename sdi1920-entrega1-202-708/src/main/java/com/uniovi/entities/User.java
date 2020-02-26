@@ -22,7 +22,7 @@ public class User {
 	@Transient // propiedad que no se almacena e la tabla.
 	private String passwordConfirm;
 
-//	private String role;
+	private String role;
 	// @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	// private Set<Mark> marks;
 
@@ -95,6 +95,14 @@ public class User {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 }
