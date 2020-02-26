@@ -1,0 +1,87 @@
+/*C1*/SET SCHEMA SYSTEM_LOBS
+INSERT INTO BLOCKS VALUES(0,2147483647,0)
+COMMIT
+/*C2*/SET SCHEMA PUBLIC
+drop table if exists user CASCADE 
+drop sequence hibernate_sequence if exists
+create sequence hibernate_sequence start with 1 increment by 1
+create table user (id bigint not null, email varchar(255), last_name varchar(255), name varchar(255), password varchar(255), primary key (id))
+alter table user add constraint UK_ob8kqyqqgmefl0aco34akdtpe unique (email)
+DISCONNECT
+/*C4*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C3*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C9*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C8*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C7*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C11*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C5*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C6*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C10*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C12*/SET SCHEMA PUBLIC
+drop table if exists user CASCADE 
+drop sequence hibernate_sequence if exists
+create sequence hibernate_sequence start with 1 increment by 1
+create table user (id bigint not null, email varchar(255), last_name varchar(255), name varchar(255), password varchar(255), primary key (id))
+alter table user add constraint UK_ob8kqyqqgmefl0aco34akdtpe unique (email)
+DISCONNECT
+/*C13*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C15*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C14*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C17*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C20*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C21*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C18*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C16*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C19*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C22*/SET SCHEMA PUBLIC
+drop table if exists user CASCADE 
+drop sequence hibernate_sequence if exists
+create sequence hibernate_sequence start with 1 increment by 1
+create table user (id bigint not null, email varchar(255), last_name varchar(255), name varchar(255), password varchar(255), primary key (id))
+alter table user add constraint UK_ob8kqyqqgmefl0aco34akdtpe unique (email)
+/*C23*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C22*/DISCONNECT
+/*C25*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C24*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C27*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C26*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C30*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C29*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C28*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C31*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C32*/SET SCHEMA PUBLIC
+drop table if exists user CASCADE 
+drop sequence hibernate_sequence if exists
+create sequence hibernate_sequence start with 1 increment by 1
+create table user (id bigint not null, email varchar(255), last_name varchar(255), name varchar(255), password varchar(255), primary key (id))
+alter table user add constraint UK_ob8kqyqqgmefl0aco34akdtpe unique (email)
+INSERT INTO USER VALUES(1,'asd@asd.com','sarasara','sarasara','$2a$10$3vLHyJFyd2iqKg6RiwnsW.UhxQMcYmVn4G9aZQ62HJBwPlLLKYXym')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 2
+COMMIT

@@ -1,7 +1,11 @@
 package com.uniovi.entities;
 
-import javax.persistence.*;
-import java.util.Set; //A collection that contains no duplicate elements
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "user")
@@ -9,36 +13,28 @@ public class User {
 	@Id
 	@GeneratedValue
 	private long id;
-	@Column(unique = true)
-	private String dni;
 	private String name;
 	private String lastName;
+	@Column(unique = true)
 	private String email;
 
 	private String password;
 	@Transient // propiedad que no se almacena e la tabla.
 	private String passwordConfirm;
 
-	private String role;
+//	private String role;
 	// @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	// private Set<Mark> marks;
-
-	public User(String dni, String name, String lastName) {
-		super();
-		this.dni = dni;
-		this.name = name;
-		this.lastName = lastName;
-	}
 
 	public User() {
 	}
 
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
+	public User(String name, String lastName, String email, String password) {
+		super();
+		this.name = name;
+		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
 	}
 
 	public String getPassword() {
@@ -63,14 +59,6 @@ public class User {
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-	public String getDni() {
-		return dni;
-	}
-
-	public void setDni(String dni) {
-		this.dni = dni;
 	}
 
 	public String getName() {
