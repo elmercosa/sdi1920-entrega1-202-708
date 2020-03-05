@@ -12,25 +12,13 @@
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
 				<li><a href="/" th:text="#{home.message}">Home</a></li>
-				<li id="marks-menu" class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#" th:text="#{gestion.notas.message}">
-						Gestión de notas <span class="caret"></span>
-				</a>
-					<ul class="dropdown-menu">
-						<li><a href="/mark/add" th:text="#{add.nota.message}"
-							sec:authorize="hasRole('ROLE_PROFESSOR')">Agregar Nota</a></li>
-						<li><a href="/mark/list" th:text="#{list.nota.message}">Ver
-								Notas</a></li>
-					</ul></li>
 				<li id="users-menu" class="dropdown"
-					sec:authorize="hasRole('ROLE_ADMIN')"><a
+					sec:authorize="isAuthenticated()"><a
 					class="dropdown-toggle" data-toggle="dropdown" href="#"
-					th:text="#{gestion.usuarios.message}"> Gestión de Usuarios <span
+					th:text="#{gestion.usuarios.message}"> Gestiï¿½n de Usuarios <span
 						class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
-						<li><a href="/user/add" th:text="#{add.user.message}">Agregar
-								Usuario</a></li>
 						<li><a href="/user/list" th:text="#{list.user.message}">Ver
 								Usuarios</a></li>
 					</ul></li>
@@ -46,12 +34,12 @@
 						<li><a id="btnEnglish" value="EN"> <img
 								th:src="@{/img/if_uk_flag.png}"
 								style="border: 0; float: left; margin-right: 15px" /> <span
-								th:text="#{language.en}">Inglés</span>
+								th:text="#{language.en}">Inglï¿½s</span>
 						</a></li>
 						<li><a id="btnSpanish" value="ES"> <img
 								th:src="@{/img/if_spain_flag.png}"
 								style="border: 0; float: left; margin-right: 15px" /> <span
-								th:text="#{language.es}">Español</span>
+								th:text="#{language.es}">Espaï¿½ol</span>
 						</a></li>
 						<li><a id="btnGerman" value="GER"> <img
 								th:src="@{/img/if_uk_flag.png}"
@@ -65,7 +53,7 @@
 				</a></li>
 				<li sec:authorize="!isAuthenticated()"><a href="/login"
 					th:text="#{login.message}"> <span
-						class="glyphicon glyphicon-log-in"></span> Identifícate
+						class="glyphicon glyphicon-log-in"></span> Identifï¿½cate
 				</a></li>
 				<li sec:authorize="isAuthenticated()"><a href="/logout"> <span
 						class="glyphicon glyphicon-log-out"></span> Desconectar
