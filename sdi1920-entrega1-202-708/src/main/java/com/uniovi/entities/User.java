@@ -1,9 +1,14 @@
 package com.uniovi.entities;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -21,10 +26,27 @@ public class User {
 	private String password;
 	@Transient // propiedad que no se almacena e la tabla.
 	private String passwordConfirm;
+	
+	@Transient
+	private boolean friendRequest;
 
 	private String role;
-	// @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	// private Set<Mark> marks;
+
+	@ManyToMany
+	@JoinTable(name = "tbl_friends", joinColumns = @JoinColumn(name = "personId"), inverseJoinColumns = @JoinColumn(name = "friendId"))
+	private Set<User> friends;
+
+	@ManyToMany
+	@JoinTable(name = "tbl_friends", joinColumns = @JoinColumn(name = "friendId"), inverseJoinColumns = @JoinColumn(name = "personId"))
+	private Set<User> friendOf;
+
+	@ManyToMany
+	@JoinTable(name = "tbl_friendsrequest", joinColumns = @JoinColumn(name = "personId"), inverseJoinColumns = @JoinColumn(name = "friendId"))
+	private Set<User> friendrequest;
+
+	@ManyToMany
+	@JoinTable(name = "tbl_friendsrequest", joinColumns = @JoinColumn(name = "friendId"), inverseJoinColumns = @JoinColumn(name = "personId"))
+	private Set<User> friendrequestOf;
 
 	public User() {
 	}
@@ -77,13 +99,21 @@ public class User {
 		this.lastName = lastName;
 	}
 
-//	public void setMarks(Set<Mark> marks) {
-//		this.marks = marks;
-//	}
-//
-//	public Set<Mark> getMarks() {
-//		return marks;
-//	}
+	public Set<User> getFriends() {
+		return friends;
+	}
+
+	public void setFriends(Set<User> friends) {
+		this.friends = friends;
+	}
+
+	public Set<User> getFriendrequest() {
+		return friendrequest;
+	}
+
+	public void setFriendrequest(Set<User> friendrequest) {
+		this.friendrequest = friendrequest;
+	}
 
 	public String getFullName() {
 		return this.name + " " + this.lastName;
@@ -104,5 +134,21 @@ public class User {
 	public void setRole(String role) {
 		this.role = role;
 	}
+	
+	
+	public boolean isFriendRequest() {
+		return friendRequest;
+	}
+
+	public void setFriendRequest(boolean friendRequest) {
+		this.friendRequest = friendRequest;
+	}
+
+	@Override
+	public String toString() {
+		return "User [friendrequest=" + friendrequest + ", friendrequestOf=" + friendrequestOf + "]";
+	}
+	
+	
 
 }

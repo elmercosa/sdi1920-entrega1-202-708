@@ -3,6 +3,8 @@ package com.uniovi.controllers;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -40,6 +42,7 @@ public class UsersController {
 	@Autowired
 	private SignUpFormValidator signUpFormValidator;
 
+
 	@RequestMapping("/user/list")
 	public String getListado(Model model, Pageable pageable, Principal principal,
 			@RequestParam(value = "", required = false) String searchText) {
@@ -51,9 +54,21 @@ public class UsersController {
 		} else {
 			users = usersService.getUsers(pageable, user);
 		}
-		model.addAttribute("usersList", users.getContent());
+		model.addAttribute("usersList", comprobarPeticiones(user, users.getContent()));
 		model.addAttribute("page", users);
 		return "user/list";
+	}
+
+	private List<User> comprobarPeticiones(User user, List<User> users) {
+		Set<User> friendRequest = user.getFriendrequest();
+		for (User user2 : users) {
+			if(friendRequest.contains(user2)) {
+				user2.setFriendRequest(true);
+			}else {
+				user2.setFriendRequest(false);
+			}
+		}
+		return users;
 	}
 
 	@RequestMapping("/user/details/{id}")
@@ -96,7 +111,6 @@ public class UsersController {
 		}
 		user.setRole(rolesService.getRoles()[0]);
 		usersService.addUser(user);
-		System.out.println(user.getEmail());
 		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
 		return "redirect:home";
 	}
