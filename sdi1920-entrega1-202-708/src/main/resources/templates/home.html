@@ -6,6 +6,8 @@
 	<div class="container" style="text-align: center">
 		<h2 th:text="#{welcome.message}"></h2>
 		<h3 th:text="#{zona.privada.message}">Esta es una zona privada la web</h3>
+		<p sec:authorize="hasRole('ROLE_ADMIN')">Inicio de sesión como admin</p>
+		<p sec:authorize="hasRole('ROLE_USER')"> Inicio de sesión como user</p>
 	</div>
 	<footer th:replace="fragments/footer" />
 </body>
