@@ -79,4 +79,19 @@ public class TestsUtils {
 		driver.findElement(boton).click();
 	}
 	
+	static public void searchUsers(WebDriver driver, String text) {
+		List<WebElement> elementos = TestsUtils.checkElement(driver, "free", "//li[contains(@id, 'users-menu')]/a");
+		elementos.get(0).click();
+
+		elementos = TestsUtils.checkElement(driver, "free", "//a[contains(@href,'user/list')]");
+		elementos.get(0).click();
+		
+		WebElement search = driver.findElement(By.name("searchText"));
+		search.click();
+		search.clear();
+		search.sendKeys("user");
+		By boton = By.className("btn");
+		driver.findElement(boton).click();
+	}
+	
 }

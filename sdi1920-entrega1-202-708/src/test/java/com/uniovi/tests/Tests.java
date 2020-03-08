@@ -71,7 +71,7 @@ public class Tests {
 	// Ejercicio 1
 
 	// [Prueba1] Registro de Usuario con datos válidos.
-	@Test
+//	@Test
 	public void test01() throws Exception {
 		driver.get("http://localhost:8090/");
 
@@ -227,7 +227,7 @@ public class Tests {
 
 	// [Prueba11] Mostrar el listado de usuarios y comprobar que se muestran todos
 	// los que existen en el sistema.
-	@Test
+//	@Test
 	public void test11() throws Exception {
 		driver.get("http://localhost:8090/");
 
@@ -243,7 +243,80 @@ public class Tests {
 
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", 2);
 		assertTrue(elementos.size() == 4);
+		
+		TestsUtils.clickOption(driver, "logout", "text", "Username");
+
+		TestsUtils.checkElement(driver, "text", "Username");
 	}
 
-	
+	// [Prueba12] Hacer una búsqueda con el campo vacío y comprobar que se muestra
+		// la página que corresponde con el listado usuarios existentes en el sistema.
+		@Test
+		public void test12() throws Exception {
+			driver.get("http://localhost:8090/");
+
+			TestsUtils.clickOption(driver, "login", "class", "btn btn-primary");
+
+			TestsUtils.fillFormLogin(driver, "user1@email.com", "user1");
+			
+			List<WebElement> elementos = TestsUtils.checkElement(driver, "free", "//li[contains(@id, 'users-menu')]/a");
+			elementos.get(0).click();
+
+			elementos = TestsUtils.checkElement(driver, "free", "//a[contains(@href,'user/list')]");
+			elementos.get(0).click();
+			
+			WebElement search = driver.findElement(By.name("searchText"));
+			search.click();
+			search.clear();
+			By boton = By.className("btn");
+			driver.findElement(boton).click();
+			
+			elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", 2);
+			assertTrue(elementos.size() == 4);
+
+			TestsUtils.clickOption(driver, "logout", "text", "Username");
+
+			TestsUtils.checkElement(driver, "text", "Username");
+		}
+
+		// [Prueba13] Hacer una búsqueda escribiendo en el campo un texto que no exista
+		// y comprobar que se muestra la página que corresponde, con la lista de
+		// usuarios vacía
+		@Test
+		public void test13() throws Exception {
+			driver.get("http://localhost:8090/");
+
+			TestsUtils.clickOption(driver, "login", "class", "btn btn-primary");
+
+			TestsUtils.fillFormLogin(driver, "user1@email.com", "user1");
+			
+			TestsUtils.searchUsers(driver, "wrong");
+			
+			SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "wrong", 2);
+
+			TestsUtils.clickOption(driver, "logout", "text", "Username");
+
+			TestsUtils.checkElement(driver, "text", "Username");
+		}
+
+		// [Prueba14] Hacer una búsqueda con un texto específico y comprobar que se
+		// muestra la página que corresponde, con la lista de usuarios en los que el
+		// texto especificados sea parte de su nombre, apellidos o de su email.
+		@Test
+		public void test14() throws Exception {
+			driver.get("http://localhost:8090/");
+
+			TestsUtils.clickOption(driver, "login", "class", "btn btn-primary");
+
+			TestsUtils.fillFormLogin(driver, "user1@email.com", "user1");
+			
+			TestsUtils.searchUsers(driver, "user");
+			
+			List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", 2);
+			assertTrue(elementos.size() == 3);
+
+			TestsUtils.clickOption(driver, "logout", "text", "Username");
+
+			TestsUtils.checkElement(driver, "text", "Username");
+		}
 }
