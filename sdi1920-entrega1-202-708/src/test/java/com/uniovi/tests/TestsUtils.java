@@ -12,7 +12,9 @@ import com.uniovi.tests.utils.SeleniumUtils;
 
 public class TestsUtils {
 	
-	public static void clickOption(WebDriver driver, String textOption, String criterio, String textoDestino) {
+	protected static Internationalization p = new Internationalization("messages");
+	
+	static void clickOption(WebDriver driver, String textOption, String criterio, String textoDestino) {
 		// CLickamos en la opción de registro y esperamos a que se cargue el enlace de
 		// Registro.
 		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "@href", textOption, 2);
@@ -24,6 +26,11 @@ public class TestsUtils {
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, criterio, textoDestino, 2);
 		// Tiene que haber un sólo elemento.
 		assertTrue(elementos.size() == 1);
+	}
+	
+	static public List<WebElement> checkKey(WebDriver driver, String key, int locale) {
+		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "text", p.getString(key, locale), 2);
+		return elementos;
 	}
 	
 	static public List<WebElement> checkElement(WebDriver driver, String type, String text) {

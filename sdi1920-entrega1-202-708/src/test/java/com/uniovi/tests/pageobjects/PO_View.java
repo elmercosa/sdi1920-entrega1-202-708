@@ -5,11 +5,12 @@ import java.util.List;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import com.uniovi.tests.Internationalization;
 import com.uniovi.tests.utils.SeleniumUtils;
 
 public class PO_View {
 	
-	protected static PO_Properties p = new PO_Properties("messages");
+	protected static Internationalization p = new Internationalization("messages");
 	protected static int timeout = 2;
 
 	public static int getTimeout() {
@@ -20,11 +21,11 @@ public class PO_View {
 		PO_View.timeout = timeout;
 	}
 
-	public static PO_Properties getP() {
+	public static Internationalization getP() {
 		return p;
 	}
 
-	public static void setP(PO_Properties p) {
+	public static void setP(Internationalization p) {
 		PO_View.p = p;
 	}
 	

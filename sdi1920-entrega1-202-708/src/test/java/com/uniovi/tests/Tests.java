@@ -19,7 +19,6 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import com.uniovi.tests.pageobjects.PO_HomeView;
 import com.uniovi.tests.pageobjects.PO_LoginView;
 import com.uniovi.tests.pageobjects.PO_PrivateView;
-import com.uniovi.tests.pageobjects.PO_Properties;
 import com.uniovi.tests.pageobjects.PO_RegisterView;
 import com.uniovi.tests.pageobjects.PO_View;
 import com.uniovi.tests.utils.SeleniumUtils;
@@ -73,7 +72,7 @@ public class Tests {
 
 	// [Prueba1] Registro de Usuario con datos válidos.
 	@Test
-	public void test01_01() throws Exception {
+	public void test01() throws Exception {
 		driver.get("http://localhost:8090/");
  
 		TestsUtils.clickOption(driver, "signup", "class", "btn btn-primary");
@@ -81,39 +80,58 @@ public class Tests {
 		TestsUtils.fillFormRegister(driver, "prueba1@prueba.com", "Prueba1", "Prueba1", "123456", "123456");
 
 		SeleniumUtils.EsperaCargaPagina(driver, "text", "Esto es una zona privada la web", 2);
+		
+		TestsUtils.clickOption(driver, "logout", "text", "Identifícate");
 
 	}
 
 	// [Prueba2] Registro de Usuario con datos inválidos (email vacío, nombre vacío,
 	// apellidos vacíos).
 	@Test
-	public void test01_02() throws Exception {
-//		driver.get("http://localhost:8090/");
+	public void test02() throws Exception {
+		driver.get("http://localhost:8090/");
 
-//		TestsUtils.fillFormRegister(driver, "", "", "", "123456", "123456");
+		TestsUtils.clickOption(driver, "signup", "class", "btn btn-primary");
+		
+		TestsUtils.fillFormRegister(driver, "", "Prueba2", "Prueba2", "123456", "123456");
 
-//		SeleniumUtils.EsperaCargaPagina(driver, "text", "Esto es una zona privada la web", 2);
+//		TestsUtils.checkKey(driver, "Error.empty", TestsUtils.p.getSPANISH());
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Registráte como usuario", 2);
+		
+		TestsUtils.fillFormRegister(driver, "prueba2@prueba.com", "", "Prueba2", "123456", "123456");
+		
+//		TestsUtils.checkKey(driver, "Error.empty", TestsUtils.p.getSPANISH());
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Registráte como usuario", 2);
+		
+		TestsUtils.fillFormRegister(driver, "prueba2@prueba.com", "Prueba2", "", "123456", "123456");
+		
+//		TestsUtils.checkKey(driver, "Error.empty", TestsUtils.p.getSPANISH());
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Registráte como usuario", 2);
 
 	}
 
 	// [Prueba3] Registro de Usuario con datos inválidos (repetición de contraseña
 	// inválida).
 	@Test
-	public void test01_03() throws Exception {
-//		driver.get("http://localhost:8090/");
+	public void test03() throws Exception {
+		driver.get("http://localhost:8090/");
+		
+		TestsUtils.clickOption(driver, "signup", "class", "btn btn-primary");
 
-//		TestsUtils.fillFormRegister(driver, "prueba2@prueba.com", "Prueba2", "Prueba2", "123456", "123457");
+		TestsUtils.fillFormRegister(driver, "prueba3@prueba.com", "Prueba3", "Prueba3", "123456", "123457");
 
-//		SeleniumUtils.EsperaCargaPagina(driver, "text", "Esto es una zona privada la web", 2);
+		TestsUtils.checkKey(driver, "Error.signup.passwordConfirm.coincidence", TestsUtils.p.getSPANISH());
 	}
 
 	// [Prueba4] Registro de Usuario con datos inválidos (email existente).
 	@Test
-	public void test01_04() throws Exception {
-//		driver.get("http://localhost:8090/");
+	public void test04() throws Exception {
+		driver.get("http://localhost:8090/");
+		
+		TestsUtils.clickOption(driver, "signup", "class", "btn btn-primary");
 
-//		TestsUtils.fillFormRegister(driver, "prueba1@prueba.com", "Prueba1", "Prueba1", "123456", "123456");
+		TestsUtils.fillFormRegister(driver, "prueba1@prueba.com", "Prueba1", "Prueba1", "123456", "123456");
 
-//		SeleniumUtils.EsperaCargaPagina(driver, "text", "Esto es una zona privada la web", 2);
+		TestsUtils.checkKey(driver, "Error.signup.email.duplicate", TestsUtils.p.getSPANISH());
 	}
 }
