@@ -74,14 +74,16 @@ public class Tests {
 	@Test
 	public void test01() throws Exception {
 		driver.get("http://localhost:8090/");
- 
+
 		TestsUtils.clickOption(driver, "signup", "class", "btn btn-primary");
-		
+
 		TestsUtils.fillFormRegister(driver, "prueba1@prueba.com", "Prueba1", "Prueba1", "123456", "123456");
 
 		SeleniumUtils.EsperaCargaPagina(driver, "text", "Esto es una zona privada la web", 2);
-		
+
 		TestsUtils.clickOption(driver, "logout", "text", "Identifícate");
+
+		TestsUtils.checkElement(driver, "text", "Identifícate");
 
 	}
 
@@ -92,19 +94,19 @@ public class Tests {
 		driver.get("http://localhost:8090/");
 
 		TestsUtils.clickOption(driver, "signup", "class", "btn btn-primary");
-		
+
 		TestsUtils.fillFormRegister(driver, "", "Prueba2", "Prueba2", "123456", "123456");
 
 //		TestsUtils.checkKey(driver, "Error.empty", TestsUtils.p.getSPANISH());
 		SeleniumUtils.EsperaCargaPagina(driver, "text", "Registráte como usuario", 2);
-		
+
 		TestsUtils.fillFormRegister(driver, "prueba2@prueba.com", "", "Prueba2", "123456", "123456");
-		
+
 //		TestsUtils.checkKey(driver, "Error.empty", TestsUtils.p.getSPANISH());
 		SeleniumUtils.EsperaCargaPagina(driver, "text", "Registráte como usuario", 2);
-		
+
 		TestsUtils.fillFormRegister(driver, "prueba2@prueba.com", "Prueba2", "", "123456", "123456");
-		
+
 //		TestsUtils.checkKey(driver, "Error.empty", TestsUtils.p.getSPANISH());
 		SeleniumUtils.EsperaCargaPagina(driver, "text", "Registráte como usuario", 2);
 
@@ -115,23 +117,86 @@ public class Tests {
 	@Test
 	public void test03() throws Exception {
 		driver.get("http://localhost:8090/");
-		
+
 		TestsUtils.clickOption(driver, "signup", "class", "btn btn-primary");
 
 		TestsUtils.fillFormRegister(driver, "prueba3@prueba.com", "Prueba3", "Prueba3", "123456", "123457");
 
-		TestsUtils.checkKey(driver, "Error.signup.passwordConfirm.coincidence", TestsUtils.p.getSPANISH());
+		TestsUtils.checkKey(driver, "Error.signup.passwordConfirm.coincidence", Internationalization.getSPANISH());
 	}
 
 	// [Prueba4] Registro de Usuario con datos inválidos (email existente).
 	@Test
 	public void test04() throws Exception {
 		driver.get("http://localhost:8090/");
-		
+
 		TestsUtils.clickOption(driver, "signup", "class", "btn btn-primary");
 
 		TestsUtils.fillFormRegister(driver, "prueba1@prueba.com", "Prueba1", "Prueba1", "123456", "123456");
 
-		TestsUtils.checkKey(driver, "Error.signup.email.duplicate", TestsUtils.p.getSPANISH());
+		TestsUtils.checkKey(driver, "Error.signup.email.duplicate", Internationalization.getSPANISH());
 	}
+
+	// [Prueba5] Inicio de sesión con datos válidos (administrador)
+	@Test
+	public void test05() throws Exception {
+		driver.get("http://localhost:8090/");
+
+		TestsUtils.clickOption(driver, "login", "class", "btn btn-primary");
+
+		TestsUtils.fillFormLogin(driver, "admin@email.com", "admin");
+
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Inicio de sesión como admin", 2);
+
+		TestsUtils.clickOption(driver, "logout", "text", "Identifícate");
+
+		TestsUtils.checkElement(driver, "text", "Identifícate");
+	}
+
+	// [Prueba6] Inicio de sesión con datos válidos (usuario estándar).
+	@Test
+	public void test06() throws Exception {
+		driver.get("http://localhost:8090/");
+
+		TestsUtils.clickOption(driver, "login", "class", "btn btn-primary");
+
+		TestsUtils.fillFormLogin(driver, "user@email.com", "user");
+
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Inicio de sesión como user", 2);
+
+		TestsUtils.clickOption(driver, "logout", "text", "Identifícate");
+
+		TestsUtils.checkElement(driver, "text", "Identifícate");
+	}
+
+	// [Prueba7] Inicio de sesión con datos inválidos (usuario estándar, campo email
+	// y contraseña vacíos)
+	@Test
+	public void test07() throws Exception {
+		driver.get("http://localhost:8090/");
+
+		TestsUtils.clickOption(driver, "login", "class", "btn btn-primary");
+
+		TestsUtils.fillFormLogin(driver, "", "user");
+
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Identifícate", 2);
+		
+		TestsUtils.fillFormLogin(driver, "user@email.com", "");
+		
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Identifícate", 2);
+	}
+
+	// [Prueba8] Inicio de sesión con datos válidos (usuario estándar, email
+	// existente, pero contraseña incorrecta).
+	@Test
+	public void test08() throws Exception {
+		driver.get("http://localhost:8090/");
+
+		TestsUtils.clickOption(driver, "login", "class", "btn btn-primary");
+
+		TestsUtils.fillFormLogin(driver, "user@email.com", "wrongPassword");
+		
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Identifícate", 2);
+	}
+
 }
