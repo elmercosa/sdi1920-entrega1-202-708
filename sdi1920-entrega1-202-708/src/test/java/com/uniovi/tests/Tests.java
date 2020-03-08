@@ -198,5 +198,28 @@ public class Tests {
 		
 		SeleniumUtils.EsperaCargaPagina(driver, "text", "Identifícate", 2);
 	}
+	
+	// [Prueba9] Hacer click en la opción de salir de sesión y comprobar que se redirige a la página de inicio de sesión (Login).
+	@Test
+	public void test09() throws Exception {
+		driver.get("http://localhost:8090/");
 
+		TestsUtils.clickOption(driver, "login", "class", "btn btn-primary");
+
+		TestsUtils.fillFormLogin(driver, "admin@email.com", "admin");
+
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Inicio de sesión como admin", 2);
+
+		TestsUtils.clickOption(driver, "logout", "text", "Identifícate");
+
+		TestsUtils.checkElement(driver, "text", "Identifícate");
+	}
+	
+	// [Prueba10] Comprobar que el botón cerrar sesión no está visible si el usuario no está autenticado.
+	@Test
+	public void test10() throws Exception {
+		driver.get("http://localhost:8090/");
+		
+		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "Desconectar", 2);
+	}
 }
