@@ -20,7 +20,7 @@
 			class="page-link" th:href="@{'?page='+${page.getNumber()+1} }"
 			th:text="${page.getNumber()+2}"></a></li>
 
-		<!-- �ltima -->
+		<!-- Última -->
 		<li class="page-item"><a class="page-link"
 			th:href="@{'?page='+${page.getTotalPages()-1}}"> Última</a></li>
 	</ul>

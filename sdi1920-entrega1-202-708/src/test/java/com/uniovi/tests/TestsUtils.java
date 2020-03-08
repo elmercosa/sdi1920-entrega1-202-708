@@ -78,4 +78,5 @@ public class TestsUtils {
 		By boton = By.className("btn");
 		driver.findElement(boton).click();
 	}
+	
 }

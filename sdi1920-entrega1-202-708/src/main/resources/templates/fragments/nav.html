@@ -15,7 +15,7 @@
 				<li id="users-menu" class="dropdown"
 					sec:authorize="isAuthenticated()"><a
 					class="dropdown-toggle" data-toggle="dropdown" href="#"
-					th:text="#{gestion.usuarios.message}"> Gesti�n de Usuarios <span
+					th:text="#{gestion.usuarios.message}"> Gestión de Usuarios <span
 						class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
@@ -34,26 +34,26 @@
 						<li><a id="btnEnglish" value="EN"> <img
 								th:src="@{/img/if_uk_flag.png}"
 								style="border: 0; float: left; margin-right: 15px" /> <span
-								th:text="#{language.en}">Ingl�s</span>
+								th:text="#{language.en}">Inglés</span>
 						</a></li>
 						<li><a id="btnSpanish" value="ES"> <img
 								th:src="@{/img/if_spain_flag.png}"
 								style="border: 0; float: left; margin-right: 15px" /> <span
-								th:text="#{language.es}">Espa�ol</span>
+								th:text="#{language.es}">Español</span>
 						</a></li>
 						<li><a id="btnGerman" value="GER"> <img
 								th:src="@{/img/if_uk_flag.png}"
 								style="border: 0; float: left; margin-right: 15px" /> <span
-								th:text="#{language.ger}">Aleman</span>
+								th:text="#{language.ger}">Alemán</span>
 						</a></li>
 					</ul></li>
 				<li sec:authorize="!isAuthenticated()"><a href="/signup"
 					th:text="#{signup.message}"> <span
-						class="glyphicon glyphicon-user"></span> Registrate
+						class="glyphicon glyphicon-user"></span> Regístrate
 				</a></li>
 				<li sec:authorize="!isAuthenticated()"><a href="/login"
 					th:text="#{login.message}"> <span
-						class="glyphicon glyphicon-log-in"></span> Identif�cate
+						class="glyphicon glyphicon-log-in"></span> Identifícate
 				</a></li>
 				<li sec:authorize="isAuthenticated()"><a href="/logout"> <span
 						class="glyphicon glyphicon-log-out"></span> Desconectar
