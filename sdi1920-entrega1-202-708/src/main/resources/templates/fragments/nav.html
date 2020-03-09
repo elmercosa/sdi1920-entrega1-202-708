@@ -13,13 +13,15 @@
 			<ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
 				<li><a href="/" th:text="#{home.message}">Home</a></li>
 				<li id="users-menu" class="dropdown"
-					sec:authorize="isAuthenticated()"><a
-					class="dropdown-toggle" data-toggle="dropdown" href="#"
+					sec:authorize="isAuthenticated()"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#"
 					th:text="#{gestion.usuarios.message}"> Gestión de Usuarios <span
 						class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
 						<li><a href="/user/list" th:text="#{list.user.message}">Ver
+								Usuarios</a></li>
+						<li><a href="/friend/request" th:text="#{nav.peticiones}">Ver
 								Usuarios</a></li>
 					</ul></li>
 			</ul>
@@ -40,11 +42,6 @@
 								th:src="@{/img/if_spain_flag.png}"
 								style="border: 0; float: left; margin-right: 15px" /> <span
 								th:text="#{language.es}">Español</span>
-						</a></li>
-						<li><a id="btnGerman" value="GER"> <img
-								th:src="@{/img/if_uk_flag.png}"
-								style="border: 0; float: left; margin-right: 15px" /> <span
-								th:text="#{language.ger}">Alemán</span>
 						</a></li>
 					</ul></li>
 				<li sec:authorize="!isAuthenticated()"><a href="/signup"
