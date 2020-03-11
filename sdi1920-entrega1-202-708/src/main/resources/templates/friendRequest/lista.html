@@ -18,7 +18,7 @@
 				<tbody>
 					<tr th:each="user : ${usersList}">
 						<td th:text="${user.name}">Nombre del usuario</td>
-						<td >aceptar</td>
+						<td> <a th:href="${'/friend/acept/' + user.email}">aceptar</a></td>
 					</tr>
 				</tbody>
 			</table>

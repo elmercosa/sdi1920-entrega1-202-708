@@ -14,4 +14,7 @@ public interface FriendRequestRepository extends CrudRepository<FriendRequests, 
 
 	@Query("SELECT fr.personId FROM FriendRequests fr WHERE fr.friendId = ?1")
 	Page<Long> findAllForUser(Pageable pageable, Long user);
+	
+	@Query("SELECT fr FROM FriendRequests fr WHERE (fr.friendId = ?2 AND fr.personId = ?1) OR (fr.friendId = ?1 AND fr.personId = ?2)")
+	FriendRequests findFriendRequestFor(Long user1, Long user2);
 }

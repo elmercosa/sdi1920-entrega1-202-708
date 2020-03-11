@@ -41,4 +41,8 @@ public class FriendRequestService {
 		Page<User> users = new PageImpl<User>(listUsers);
 		return users;
 	}
+	
+	public void deleteFriendRequest(User from, User to) {
+		friendRequestRepository.delete(friendRequestRepository.findFriendRequestFor(from.getId(), to.getId()));
+	}
 }
