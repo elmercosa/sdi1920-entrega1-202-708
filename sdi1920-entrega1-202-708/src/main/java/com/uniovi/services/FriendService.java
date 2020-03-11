@@ -18,31 +18,48 @@ import com.uniovi.repositories.UsersRepository;
 public class FriendService {
 	@Autowired
 	private FriendRepository friendRepository;
-	
+
 	@Autowired
 	private UsersRepository usersRepository;
 
 	public void addFriend(User from, User to) {
-		if(friendRepository.findFriendship(from.getId(), to.getId()) == 0) {
+		if (friendRepository.findFriendship(from.getId(), to.getId()) == 0) {
 			friendRepository.save(new Friends(from.getId(), to.getId()));
 		}
 	}
 
-	public Page<User> findAllForUser(Pageable pageable,User user){
+	public Page<User> findAllForUser(Pageable pageable, User user) {
 		Page<Friends> list = friendRepository.findFriendsForUser(pageable, user.getId());
-		
+
 		List<User> listUsers = new LinkedList<User>();
-		
+
 		for (Friends friends : list) {
-			if(friends.getFriendId() == user.getId()) {
+			if (friends.getFriendId() == user.getId()) {
 				listUsers.add(usersRepository.findById(friends.getPersonId()).get());
 			}
-			
-			if(friends.getPersonId() == user.getId()) {
+
+			if (friends.getPersonId() == user.getId()) {
 				listUsers.add(usersRepository.findById(friends.getFriendId()).get());
 			}
 		}
 		Page<User> users = new PageImpl<User>(listUsers);
 		return users;
+	}
+
+	public List<User> findAllFriendsForUser(User user) {
+		List<Friends> list = friendRepository.findAllFriendsForUser(user.getId());
+
+		List<User> listUsers = new LinkedList<User>();
+
+		for (Friends friends : list) {
+			if (friends.getFriendId() == user.getId()) {
+				listUsers.add(usersRepository.findById(friends.getPersonId()).get());
+			}
+
+			if (friends.getPersonId() == user.getId()) {
+				listUsers.add(usersRepository.findById(friends.getFriendId()).get());
+			}
+		}
+		return listUsers;
 	}
 }

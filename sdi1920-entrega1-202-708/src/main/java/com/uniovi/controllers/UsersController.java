@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.uniovi.entities.User;
+import com.uniovi.services.FriendService;
 import com.uniovi.services.RolesService;
 import com.uniovi.services.SecurityService;
 import com.uniovi.services.UsersService;
@@ -41,6 +42,9 @@ public class UsersController {
 
 	@Autowired
 	private SignUpFormValidator signUpFormValidator;
+	
+	@Autowired
+	private FriendService friendService;
 
 
 	@RequestMapping("/user/list")
@@ -66,6 +70,12 @@ public class UsersController {
 				user2.setFriendRequest(true);
 			}else {
 				user2.setFriendRequest(false);
+			}
+		}
+		List<User> amigos = friendService.findAllFriendsForUser(user);
+		for (User user2 : users) {
+			if(amigos.contains(user2)) {
+				user2.setFriendRequest(true);
 			}
 		}
 		return users;
