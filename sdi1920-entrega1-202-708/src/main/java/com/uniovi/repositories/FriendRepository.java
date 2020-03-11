@@ -12,8 +12,8 @@ public interface FriendRepository extends CrudRepository<Friends, Long> {
 	@Query("SELECT COUNT(*) FROM Friends f WHERE (f.friendId = ?2 AND f.personId = ?1) OR (f.friendId = ?1 AND f.personId = ?2)")
 	int findFriendship(Long from, Long to);
 
-//	@Query("SELECT fr.personId FROM FriendRequests fr WHERE fr.friendId = ?1")
-//	Page<Long> findFriendsForUser(Pageable pageable, Long user);
+	@Query("SELECT fr FROM Friends fr WHERE fr.friendId = ?1 OR fr.personId = ?1")
+	Page<Friends> findFriendsForUser(Pageable pageable, Long user);
 	
 	
 }

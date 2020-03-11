@@ -1,8 +1,12 @@
 package com.uniovi.controllers;
 
 import java.security.Principal;
+import java.util.LinkedList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,15 +37,15 @@ public class FriendController {
 		friendRequestService.deleteFriendRequest(from, to);
 		return "redirect:/friend/request";
 	}
-//
-//	@RequestMapping("/friend/request")
-//	public String getRequests(Model model, Pageable pageable , Principal principal) {
-//		String fromEmail = principal.getName();
-//		User user = usersService.getUserByEmail(fromEmail);
-//		Page<User> users = new PageImpl<User>(new LinkedList<User>());
-//		users = friendRequestService.findAllForUser(pageable, user);
-//		model.addAttribute("usersList", users.getContent());
-//		model.addAttribute("page", users);
-//		return "friendRequest/lista";
-//	}
+
+	@RequestMapping("/friend/list")
+	public String getRequests(Model model, Pageable pageable , Principal principal) {
+		String fromEmail = principal.getName();
+		User user = usersService.getUserByEmail(fromEmail);
+		Page<User> users = new PageImpl<User>(new LinkedList<User>());
+		users = friendService.findAllForUser(pageable, user);
+		model.addAttribute("usersList", users.getContent());
+		model.addAttribute("page", users);
+		return "friends/lista";
+	}
 }

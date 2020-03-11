@@ -27,16 +27,22 @@ public class FriendService {
 			friendRepository.save(new Friends(from.getId(), to.getId()));
 		}
 	}
-	
-//	public Page<User> findAllForUser(Pageable pageable,User user){
-//		List<Long> list = friendRequestRepository.findAllForUser(pageable, user.getId()).getContent();
-//		List<User> listUsers = new LinkedList<User>();
-//		for(Long id: list) {
-//			if(usersRepository.findById(id).isPresent()) {
-//				listUsers.add(usersRepository.findById(id).get());
-//			}
-//		}
-//		Page<User> users = new PageImpl<User>(listUsers);
-//		return users;
-//	}
+
+	public Page<User> findAllForUser(Pageable pageable,User user){
+		Page<Friends> list = friendRepository.findFriendsForUser(pageable, user.getId());
+		
+		List<User> listUsers = new LinkedList<User>();
+		
+		for (Friends friends : list) {
+			if(friends.getFriendId() == user.getId()) {
+				listUsers.add(usersRepository.findById(friends.getPersonId()).get());
+			}
+			
+			if(friends.getPersonId() == user.getId()) {
+				listUsers.add(usersRepository.findById(friends.getFriendId()).get());
+			}
+		}
+		Page<User> users = new PageImpl<User>(listUsers);
+		return users;
+	}
 }
