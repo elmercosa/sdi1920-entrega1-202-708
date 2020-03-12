@@ -305,7 +305,7 @@ public class Tests {
 	// [Prueba15] Desde el listado de usuarios de la aplicación, enviar una
 	// invitación de amistad a un usuario. Comprobar que la solicitud de amistad
 	// aparece en el listado de invitaciones (punto siguiente).
-	@Test
+//	@Test
 	public void test15() throws Exception {
 		driver.get("http://localhost:8090/");
 
@@ -317,36 +317,36 @@ public class Tests {
 
 		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", 2);
 		assertTrue(elementos.size() == 1);
-		
+
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "text", "agregar amigo", 2);
 		assertTrue(elementos.size() == 1);
-		
+
 		elementos.get(0).click();
-		
+
 		TestsUtils.logout(driver, "Nombre de usuario");
-		
+
 		TestsUtils.clickOption(driver, "login", "class", "btn btn-primary");
-		
+
 		TestsUtils.fillFormLogin(driver, "user2@email.com", "user2");
-		
+
 		elementos = TestsUtils.checkElement(driver, "free", "//li[contains(@id, 'users-menu')]/a");
 		elementos.get(0).click();
 
 		elementos = TestsUtils.checkElement(driver, "free", "//a[contains(@href,'friend/request')]");
 		elementos.get(0).click();
-		
+
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", 2);
 		assertTrue(elementos.size() == 1);
 
 		TestsUtils.logout(driver, "Nombre de usuario");
 	}
-	
+
 	// [Prueba16] Desde el listado de usuarios de la aplicación, enviar una
 	// invitación de amistad a un usuario al que ya le habíamos enviado la
 	// invitación previamente. No debería dejarnos enviar la invitación, se podría
 	// ocultar el botón de enviar invitación o notificar que ya había sido enviada
 	// previamente.
-	@Test
+//	@Test
 	public void test16() throws Exception {
 		driver.get("http://localhost:8090/");
 
@@ -358,10 +358,64 @@ public class Tests {
 
 		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", 2);
 		assertTrue(elementos.size() == 1);
-		
+
 		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "agregar amigo", 2);
 
 		TestsUtils.logout(driver, "Nombre de usuario");
 	}
-	
+
+	// [Prueba17] Mostrar el listado de invitaciones de amistad recibidas. Comprobar
+	// con un listado que contenga varias invitaciones recibidas.
+	@Test
+	public void test17() throws Exception {
+		driver.get("http://localhost:8090/");
+
+		TestsUtils.clickOption(driver, "login", "class", "btn btn-primary");
+
+		TestsUtils.fillFormLogin(driver, "user1@email.com", "user1");
+
+		TestsUtils.searchUsers(driver, "user2@email.com");
+
+		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", 2);
+		assertTrue(elementos.size() == 1);
+
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "text", "agregar amigo", 2);
+		assertTrue(elementos.size() == 1);
+
+		elementos.get(0).click();
+		
+		TestsUtils.logout(driver, "Nombre de usuario");
+
+		TestsUtils.clickOption(driver, "login", "class", "btn btn-primary");
+
+		TestsUtils.fillFormLogin(driver, "user3@email.com", "user3");
+		
+		TestsUtils.searchUsers(driver, "user2@email.com");
+		
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", 2);
+		assertTrue(elementos.size() == 1);
+
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "text", "agregar amigo", 2);
+		assertTrue(elementos.size() == 1);
+
+		elementos.get(0).click();
+
+		TestsUtils.logout(driver, "Nombre de usuario");
+
+		TestsUtils.clickOption(driver, "login", "class", "btn btn-primary");
+
+		TestsUtils.fillFormLogin(driver, "user2@email.com", "user2");
+
+		elementos = TestsUtils.checkElement(driver, "free", "//li[contains(@id, 'users-menu')]/a");
+		elementos.get(0).click();
+
+		elementos = TestsUtils.checkElement(driver, "free", "//a[contains(@href,'friend/request')]");
+		elementos.get(0).click();
+
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", 2);
+		assertTrue(elementos.size() == 2);
+
+		TestsUtils.logout(driver, "Nombre de usuario");
+	}
+
 }
