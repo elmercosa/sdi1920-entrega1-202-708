@@ -89,9 +89,15 @@ public class TestsUtils {
 		WebElement search = driver.findElement(By.name("searchText"));
 		search.click();
 		search.clear();
-		search.sendKeys("user");
+		search.sendKeys(text);
 		By boton = By.className("btn");
 		driver.findElement(boton).click();
+	}
+	
+	static public void logout(WebDriver driver, String logout) {
+		TestsUtils.clickOption(driver, "logout", "text", logout);
+
+		TestsUtils.checkElement(driver, "text", logout);
 	}
 	
 }
