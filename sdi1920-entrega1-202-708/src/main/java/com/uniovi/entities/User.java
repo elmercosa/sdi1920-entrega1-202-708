@@ -2,6 +2,7 @@ package com.uniovi.entities;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -47,6 +49,9 @@ public class User {
 	@ManyToMany
 	@JoinTable(name = "tbl_friendsrequest", joinColumns = @JoinColumn(name = "friendId"), inverseJoinColumns = @JoinColumn(name = "personId"))
 	private Set<User> friendrequestOf;
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private Set<Post> posts;
 
 	public User() {
 	}
@@ -148,7 +153,12 @@ public class User {
 	public String toString() {
 		return "User [friendrequest=" + friendrequest + ", friendrequestOf=" + friendrequestOf + "]";
 	}
-	
-	
 
+	public Set<Post> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(Set<Post> posts) {
+		this.posts = posts;
+	}
 }
