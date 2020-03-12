@@ -373,27 +373,11 @@ public class Tests {
 
 		TestsUtils.clickOption(driver, "login", "class", "btn btn-primary");
 
-		TestsUtils.fillFormLogin(driver, "user1@email.com", "user1");
-
-		TestsUtils.searchUsers(driver, "user2@email.com");
-
-		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", 2);
-		assertTrue(elementos.size() == 1);
-
-		elementos = SeleniumUtils.EsperaCargaPagina(driver, "text", "agregar amigo", 2);
-		assertTrue(elementos.size() == 1);
-
-		elementos.get(0).click();
-
-		TestsUtils.logout(driver, "Nombre de usuario");
-
-		TestsUtils.clickOption(driver, "login", "class", "btn btn-primary");
-
 		TestsUtils.fillFormLogin(driver, "user3@email.com", "user3");
 
 		TestsUtils.searchUsers(driver, "user2@email.com");
 
-		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", 2);
+		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", 2);
 		assertTrue(elementos.size() == 1);
 
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "text", "agregar amigo", 2);
@@ -422,45 +406,53 @@ public class Tests {
 	// [Prueba18] Sobre el listado de invitaciones recibidas. Hacer click en el
 	// botón/enlace de una de ellas y comprobar que dicha solicitud desaparece del
 	// listado de invitaciones.
-	@Test
+//	@Test
 	public void test18() throws Exception {
 		driver.get("http://localhost:8090/");
 
 		TestsUtils.clickOption(driver, "login", "class", "btn btn-primary");
 
-		TestsUtils.fillFormLogin(driver, "user1@email.com", "user1");
-
-		TestsUtils.searchUsers(driver, "user2@email.com");
-
-		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", 2);
-		assertTrue(elementos.size() == 1);
-
-		elementos = SeleniumUtils.EsperaCargaPagina(driver, "text", "agregar amigo", 2);
-		assertTrue(elementos.size() == 1);
-
-		elementos.get(0).click();
-
-		TestsUtils.logout(driver, "Nombre de usuario");
-
-		TestsUtils.clickOption(driver, "login", "class", "btn btn-primary");
-
 		TestsUtils.fillFormLogin(driver, "user2@email.com", "user2");
 
-		elementos = TestsUtils.checkElement(driver, "free", "//li[contains(@id, 'users-menu')]/a");
+		List<WebElement> elementos = TestsUtils.checkElement(driver, "free", "//li[contains(@id, 'users-menu')]/a");
 		elementos.get(0).click();
 
 		elementos = TestsUtils.checkElement(driver, "free", "//a[contains(@href,'friend/request')]");
 		elementos.get(0).click();
 
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", 2);
-		assertTrue(elementos.size() == 1);
-		
+		assertTrue(elementos.size() == 2);
+
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "@href", "friend/acept", 2);
-		assertTrue(elementos.size() == 1);
+		assertTrue(elementos.size() == 2);
+		elementos.get(0).click();
+
+		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "User1", 2);
+
+		TestsUtils.logout(driver, "Nombre de usuario");
+	}
+
+	// [Prueba19] Mostrar el listado de amigos de un usuario. Comprobar que el
+	// listado contiene los amigos que deben ser.
+//	@Test
+	public void test19() throws Exception {
+		driver.get("http://localhost:8090/");
+
+		TestsUtils.clickOption(driver, "login", "class", "btn btn-primary");
+
+		TestsUtils.fillFormLogin(driver, "user2@email.com", "user2");
+		
+		List<WebElement> elementos = TestsUtils.checkElement(driver, "free", "//li[contains(@id, 'users-menu')]/a");
 		elementos.get(0).click();
 		
-		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "aceptar", 2);
-
+		elementos = TestsUtils.checkElement(driver, "free", "//a[contains(@href,'friend/list')]");
+		elementos.get(0).click();
+		
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", 2);
+		assertTrue(elementos.size() == 1);
+		
+		TestsUtils.checkElement(driver, "text", "User1");
+		
 		TestsUtils.logout(driver, "Nombre de usuario");
 	}
 }
