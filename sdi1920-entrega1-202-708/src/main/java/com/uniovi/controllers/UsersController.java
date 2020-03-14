@@ -46,7 +46,14 @@ public class UsersController {
 	@Autowired
 	private FriendService friendService;
 
-
+	/**
+	 * Metodo encargado de responer a la peticion para ver la lista de usuarios del sistema, exceptuando los administradores y el usuario actual de sesion
+	 * @param model
+	 * @param pageable
+	 * @param principal
+	 * @param searchText Texto de busqueda de usuarios
+	 * @return
+	 */
 	@RequestMapping("/user/list")
 	public String getListado(Model model, Pageable pageable, Principal principal,
 			@RequestParam(value = "", required = false) String searchText) {
@@ -63,6 +70,12 @@ public class UsersController {
 		return "user/list";
 	}
 
+	/**
+	 * Metodo privado encargado de filtrar la pagina actual de usuarios para no mostrar el boton de agregar amigo si ya se ha enviado la peticion o ya son amigos
+	 * @param user usuario en sesion
+	 * @param users pagina actual de usuarios
+	 * @return lista filtrada
+	 */
 	private List<User> comprobarPeticiones(User user, List<User> users) {
 		Set<User> friendRequest = user.getFriendrequest();
 		for (User user2 : users) {
@@ -81,38 +94,23 @@ public class UsersController {
 		return users;
 	}
 
-	@RequestMapping("/user/details/{id}")
-	public String getDetail(Model model, @PathVariable Long id) {
-		model.addAttribute("user", usersService.getUser(id));
-		return "user/details";
-	}
-
-	@RequestMapping("/user/delete/{id}")
-	public String delete(@PathVariable Long id) {
-		usersService.deleteUser(id);
-		return "redirect:/user/list";
-	}
-
-	@RequestMapping(value = "/user/edit/{id}")
-	public String getEdit(Model model, @PathVariable Long id) {
-		User user = usersService.getUser(id);
-		model.addAttribute("user", user);
-		return "user/edit";
-	}
-
-	@RequestMapping(value = "/user/edit/{id}", method = RequestMethod.POST)
-	public String setEdit(Model model, @PathVariable Long id, @ModelAttribute User user) {
-		user.setId(id);
-		usersService.addUser(user);
-		return "redirect:/user/details/" + id;
-	}
-
+	/**
+	 * Metodo get encargado de responder a la peticion para registrar un usuario 
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public String signup(Model model) {
 		model.addAttribute("user", new User());
 		return "signup";
 	}
 
+	/**
+	 * Metodo post encargado de responder a la peticion del formulario de registro para guardar el nuevo usuario
+	 * @param user
+	 * @param result
+	 * @return
+	 */
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public String signup(@Validated User user, BindingResult result) {
 		signUpFormValidator.validate(user, result);
@@ -125,17 +123,26 @@ public class UsersController {
 		return "redirect:home";
 	}
 
+	/**
+	 * Metodo get encargado de responder a la peticion para iniciar sesion
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(Model model) {
 		return "login";
 	}
 
+	/**
+	 * Metodo get encargado de redirigir al usuario que inicia sesion a la pagina home
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
 	public String home(Model model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
-		model.addAttribute("markList", new ArrayList<>());
 		return "home";
 	}
 }

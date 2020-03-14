@@ -24,6 +24,13 @@ public class FriendRequestController {
 	@Autowired
 	private FriendRequestService friendRequestService;
 
+	/**
+	 * Metodo encargado de responder a la peticion para enviar la peticion de amistad a un usuario de la lista
+	 * @param model
+	 * @param principal
+	 * @param email
+	 * @return
+	 */
 	@RequestMapping("/friend/add/{email}")
 	public String getListado(Model model, Principal principal, @PathVariable String email) {
 		String fromEmail = principal.getName();
@@ -35,6 +42,13 @@ public class FriendRequestController {
 		return "redirect:/user/list";
 	}
 
+	/**
+	 * Metodo encargado de responder a la peticion para ver la lista de peticiones de amistad que tiene el usuario en sesion
+	 * @param model
+	 * @param pageable
+	 * @param principal
+	 * @return
+	 */
 	@RequestMapping("/friend/request")
 	public String getRequests(Model model, Pageable pageable , Principal principal) {
 		String fromEmail = principal.getName();

@@ -12,6 +12,11 @@ public class DataBaseController {
 	@Autowired
 	private DataBaseService dataBaseService;
 
+	/**
+	 * Metodo que responde a la peticion de resetear la bbdd
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/bbdd/reset")
 	public String getListado(Model model) {
 		dataBaseService.resetDataBase();

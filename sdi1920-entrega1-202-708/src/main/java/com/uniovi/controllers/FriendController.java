@@ -28,6 +28,13 @@ public class FriendController {
 	@Autowired
 	private FriendRequestService friendRequestService ;
 
+	/**
+	 * Metodo encargado de responder a la peticion para aceptar a un usuario de la lista de peticiones de amistad, a continuacion, borra la peticion de amistad de la bbdd
+	 * @param model
+	 * @param principal usuario en sesion
+	 * @param email email del usuario que ha enviardo la peticion
+	 * @return
+	 */
 	@RequestMapping("/friend/acept/{email}")
 	public String getListado(Model model, Principal principal, @PathVariable String email) {
 		String fromEmail = principal.getName();
@@ -38,6 +45,13 @@ public class FriendController {
 		return "redirect:/friend/request";
 	}
 
+	/**
+	 * Metodo encargado responder a la peticion encargada de mostrar la lista de amigos del usuario en sesion
+	 * @param model
+	 * @param pageable
+	 * @param principal
+	 * @return
+	 */
 	@RequestMapping("/friend/list")
 	public String getRequests(Model model, Pageable pageable , Principal principal) {
 		String fromEmail = principal.getName();

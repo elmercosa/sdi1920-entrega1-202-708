@@ -9,6 +9,12 @@ import com.uniovi.entities.FriendRequests;
 
 public interface FriendRequestRepository extends CrudRepository<FriendRequests, Long> {
 	
+	/**
+	 * Metodo que busca 
+	 * @param from
+	 * @param to
+	 * @return
+	 */
 	@Query("SELECT COUNT(*) FROM FriendRequests fr WHERE fr.friendId = ?2 AND fr.personId = ?1")
 	int findFriendRequest(Long from, Long to);
 
