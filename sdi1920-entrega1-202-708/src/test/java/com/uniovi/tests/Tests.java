@@ -452,38 +452,85 @@ public class Tests {
 		driver.get("http://localhost:8090/");
 
 		System.out.println(TestsUtils.p.getString("welcome.message", TestsUtils.p.getSPANISH()));
-		
-		SeleniumUtils.EsperaCargaPagina(driver, "text", TestsUtils.p.getString("welcome.message", TestsUtils.p.getSPANISH()), 2);
+
+		SeleniumUtils.EsperaCargaPagina(driver, "text",
+				TestsUtils.p.getString("welcome.message", TestsUtils.p.getSPANISH()), 2);
 		TestsUtils.changeLanguage(driver, "btnEnglish");
-		SeleniumUtils.EsperaCargaPagina(driver, "text", TestsUtils.p.getString("welcome.message", TestsUtils.p.getENGLISH()), 2);
+		SeleniumUtils.EsperaCargaPagina(driver, "text",
+				TestsUtils.p.getString("welcome.message", TestsUtils.p.getENGLISH()), 2);
 		TestsUtils.changeLanguage(driver, "btnSpanish");
-		SeleniumUtils.EsperaCargaPagina(driver, "text", TestsUtils.p.getString("welcome.message", TestsUtils.p.getSPANISH()), 2);
-		
+		SeleniumUtils.EsperaCargaPagina(driver, "text",
+				TestsUtils.p.getString("welcome.message", TestsUtils.p.getSPANISH()), 2);
+
 		TestsUtils.clickOption(driver, "signup", "class", "btn btn-primary");
-		
-		SeleniumUtils.EsperaCargaPagina(driver, "text", TestsUtils.p.getString("signup.message", TestsUtils.p.getSPANISH()), 2);
+
+		SeleniumUtils.EsperaCargaPagina(driver, "text",
+				TestsUtils.p.getString("signup.message", TestsUtils.p.getSPANISH()), 2);
 		TestsUtils.changeLanguage(driver, "btnEnglish");
-		SeleniumUtils.EsperaCargaPagina(driver, "text", TestsUtils.p.getString("signup.message", TestsUtils.p.getENGLISH()), 2);
+		SeleniumUtils.EsperaCargaPagina(driver, "text",
+				TestsUtils.p.getString("signup.message", TestsUtils.p.getENGLISH()), 2);
 		TestsUtils.changeLanguage(driver, "btnSpanish");
-		SeleniumUtils.EsperaCargaPagina(driver, "text", TestsUtils.p.getString("signup.message", TestsUtils.p.getSPANISH()), 2);
+		SeleniumUtils.EsperaCargaPagina(driver, "text",
+				TestsUtils.p.getString("signup.message", TestsUtils.p.getSPANISH()), 2);
+
+		TestsUtils.clickOption(driver, "login", "class", "btn btn-primary");
+
+		SeleniumUtils.EsperaCargaPagina(driver, "text",
+				TestsUtils.p.getString("login.message", TestsUtils.p.getSPANISH()), 2);
+		TestsUtils.changeLanguage(driver, "btnEnglish");
+		SeleniumUtils.EsperaCargaPagina(driver, "text",
+				TestsUtils.p.getString("login.message", TestsUtils.p.getENGLISH()), 2);
+		TestsUtils.changeLanguage(driver, "btnSpanish");
+		SeleniumUtils.EsperaCargaPagina(driver, "text",
+				TestsUtils.p.getString("login.message", TestsUtils.p.getSPANISH()), 2);
+
+		TestsUtils.fillFormLogin(driver, "user1@email.com", "user1");
+
+		SeleniumUtils.EsperaCargaPagina(driver, "text",
+				TestsUtils.p.getString("zona.privada.message", TestsUtils.p.getSPANISH()), 2);
+		TestsUtils.changeLanguage(driver, "btnEnglish");
+		SeleniumUtils.EsperaCargaPagina(driver, "text",
+				TestsUtils.p.getString("zona.privada.message", TestsUtils.p.getENGLISH()), 2);
+		TestsUtils.changeLanguage(driver, "btnSpanish");
+		SeleniumUtils.EsperaCargaPagina(driver, "text",
+				TestsUtils.p.getString("zona.privada.message", TestsUtils.p.getSPANISH()), 2);
+
+		TestsUtils.logout(driver, "Nombre de usuario");
+	}
+
+	// [Prueba21] Intentar acceder sin estar autenticado a la opción de listado de
+	// usuarios. Se deberá volver al formulario de login.
+	@Test
+	public void test21() throws Exception {
+		driver.get("http://localhost:8090/user/list");
+		
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Nombre de usuario", 2);
+	}
+
+	// [Prueba22] Intentar acceder sin estar autenticado a la opción de listado de
+	// publicaciones de un usuario estándar. Se deberá volver al formulario de login
+	@Test
+	public void test22() throws Exception {
+		driver.get("http://localhost:8090/friend/list");
+		
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Nombre de usuario", 2);
+	}
+
+	// [Prueba23] Estando autenticado como usuario estándar intentar acceder a una
+	// opción disponible solo para usuarios administradores (Se puede añadir una
+	// opción cualquiera en el menú). Se deberá indicar un mensaje de acción
+	// prohibida.
+	@Test
+	public void test23() throws Exception {
+		driver.get("http://localhost:8090/");
 		
 		TestsUtils.clickOption(driver, "login", "class", "btn btn-primary");
 		
-		SeleniumUtils.EsperaCargaPagina(driver, "text", TestsUtils.p.getString("login.message", TestsUtils.p.getSPANISH()), 2);
-		TestsUtils.changeLanguage(driver, "btnEnglish");
-		SeleniumUtils.EsperaCargaPagina(driver, "text", TestsUtils.p.getString("login.message", TestsUtils.p.getENGLISH()), 2);
-		TestsUtils.changeLanguage(driver, "btnSpanish");
-		SeleniumUtils.EsperaCargaPagina(driver, "text", TestsUtils.p.getString("login.message", TestsUtils.p.getSPANISH()), 2);
-		
 		TestsUtils.fillFormLogin(driver, "user1@email.com", "user1");
 		
-		SeleniumUtils.EsperaCargaPagina(driver, "text", TestsUtils.p.getString("zona.privada.message", TestsUtils.p.getSPANISH()), 2);
-		TestsUtils.changeLanguage(driver, "btnEnglish");
-		SeleniumUtils.EsperaCargaPagina(driver, "text", TestsUtils.p.getString("zona.privada.message", TestsUtils.p.getENGLISH()), 2);
-		TestsUtils.changeLanguage(driver, "btnSpanish");
-		SeleniumUtils.EsperaCargaPagina(driver, "text", TestsUtils.p.getString("zona.privada.message", TestsUtils.p.getSPANISH()), 2);
+		driver.get("http://localhost:8090/bbdd/reset");
 		
-		TestsUtils.logout(driver, "Nombre de usuario");
+		
 	}
 
 }
