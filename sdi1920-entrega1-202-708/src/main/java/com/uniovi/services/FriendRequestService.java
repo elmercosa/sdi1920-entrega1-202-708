@@ -43,6 +43,6 @@ public class FriendRequestService {
 	}
 	
 	public void deleteFriendRequest(User from, User to) {
-		friendRequestRepository.delete(friendRequestRepository.findFriendRequestFor(from.getId(), to.getId()));
+		friendRequestRepository.deleteAll(friendRequestRepository.findFriendRequestFor(from.getId(), to.getId()));
 	}
 }
