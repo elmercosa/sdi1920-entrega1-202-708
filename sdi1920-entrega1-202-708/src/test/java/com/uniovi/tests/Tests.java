@@ -528,9 +528,9 @@ public class Tests {
 		
 		TestsUtils.fillFormLogin(driver, "user1@email.com", "user1");
 		
-		driver.get("http://localhost:8090/bbdd/reset");
+		driver.get("http://localhost:8090/admin");
 		
-		
+		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "Solo puedes ver esto si eres admin", 2);
 	}
 
 }
