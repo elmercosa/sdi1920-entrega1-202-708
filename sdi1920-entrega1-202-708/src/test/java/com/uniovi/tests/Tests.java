@@ -72,7 +72,7 @@ public class Tests {
 	// Ejercicio 1
 
 	// [Prueba1] Registro de Usuario con datos válidos.
-//	@Test
+	@Test
 	public void test01() throws Exception {
 		driver.get("http://localhost:8090/");
 
@@ -87,7 +87,7 @@ public class Tests {
 
 	// [Prueba2] Registro de Usuario con datos inválidos (email vacío, nombre vacío,
 	// apellidos vacíos).
-//	@Test
+	@Test
 	public void test02() throws Exception {
 		driver.get("http://localhost:8090/");
 
@@ -95,23 +95,20 @@ public class Tests {
 
 		TestsUtils.fillFormRegister(driver, "", "Prueba2", "Prueba2", "123456", "123456");
 
-//		TestsUtils.checkKey(driver, "Error.empty", TestsUtils.p.getSPANISH());
 		SeleniumUtils.EsperaCargaPagina(driver, "text", "Regístrate como usuario", 2);
 
 		TestsUtils.fillFormRegister(driver, "prueba2@prueba.com", "", "Prueba2", "123456", "123456");
 
-//		TestsUtils.checkKey(driver, "Error.empty", TestsUtils.p.getSPANISH());
 		SeleniumUtils.EsperaCargaPagina(driver, "text", "Regístrate como usuario", 2);
 
 		TestsUtils.fillFormRegister(driver, "prueba2@prueba.com", "Prueba2", "", "123456", "123456");
 
-//		TestsUtils.checkKey(driver, "Error.empty", TestsUtils.p.getSPANISH());
 		SeleniumUtils.EsperaCargaPagina(driver, "text", "Regístrate como usuario", 2);
 	}
 
 	// [Prueba3] Registro de Usuario con datos inválidos (repetición de contraseña
 	// inválida).
-//	@Test
+	@Test
 	public void test03() throws Exception {
 		driver.get("http://localhost:8090/");
 
@@ -123,7 +120,7 @@ public class Tests {
 	}
 
 	// [Prueba4] Registro de Usuario con datos inválidos (email existente).
-//	@Test
+	@Test
 	public void test04() throws Exception {
 		driver.get("http://localhost:8090/");
 
@@ -135,7 +132,7 @@ public class Tests {
 	}
 
 	// [Prueba5] Inicio de sesión con datos válidos (administrador)
-//	@Test
+	@Test
 	public void test05() throws Exception {
 		driver.get("http://localhost:8090/");
 
@@ -149,7 +146,7 @@ public class Tests {
 	}
 
 	// [Prueba6] Inicio de sesión con datos válidos (usuario estándar).
-//	@Test
+	@Test
 	public void test06() throws Exception {
 		driver.get("http://localhost:8090/");
 
@@ -164,7 +161,7 @@ public class Tests {
 
 	// [Prueba7] Inicio de sesión con datos inválidos (usuario estándar, campo email
 	// y contraseña vacíos)
-//	@Test
+	@Test
 	public void test07() throws Exception {
 		driver.get("http://localhost:8090/");
 
@@ -181,7 +178,7 @@ public class Tests {
 
 	// [Prueba8] Inicio de sesión con datos válidos (usuario estándar, email
 	// existente, pero contraseña incorrecta).
-//	@Test
+	@Test
 	public void test08() throws Exception {
 		driver.get("http://localhost:8090/");
 
@@ -194,7 +191,7 @@ public class Tests {
 
 	// [Prueba9] Hacer click en la opción de salir de sesión y comprobar que se
 	// redirige a la página de inicio de sesión (Login).
-//	@Test
+	@Test
 	public void test09() throws Exception {
 		driver.get("http://localhost:8090/");
 
@@ -209,7 +206,7 @@ public class Tests {
 
 	// [Prueba10] Comprobar que el botón cerrar sesión no está visible si el usuario
 	// no está autenticado.
-//	@Test
+	@Test
 	public void test10() throws Exception {
 		driver.get("http://localhost:8090/");
 
@@ -218,7 +215,7 @@ public class Tests {
 
 	// [Prueba11] Mostrar el listado de usuarios y comprobar que se muestran todos
 	// los que existen en el sistema.
-//	@Test
+	@Test
 	public void test11() throws Exception {
 		driver.get("http://localhost:8090/");
 
@@ -240,7 +237,7 @@ public class Tests {
 
 	// [Prueba12] Hacer una búsqueda con el campo vacío y comprobar que se muestra
 	// la página que corresponde con el listado usuarios existentes en el sistema.
-//	@Test
+	@Test
 	public void test12() throws Exception {
 		driver.get("http://localhost:8090/");
 
@@ -248,19 +245,9 @@ public class Tests {
 
 		TestsUtils.fillFormLogin(driver, "user1@email.com", "user1");
 
-		List<WebElement> elementos = TestsUtils.checkElement(driver, "free", "//li[contains(@id, 'users-menu')]/a");
-		elementos.get(0).click();
+		TestsUtils.searchUsers(driver, "");
 
-		elementos = TestsUtils.checkElement(driver, "free", "//a[contains(@href,'user/list')]");
-		elementos.get(0).click();
-
-		WebElement search = driver.findElement(By.name("searchText"));
-		search.click();
-		search.clear();
-		By boton = By.className("btn");
-		driver.findElement(boton).click();
-
-		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", 2);
+		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", 2);
 		assertTrue(elementos.size() == 4);
 
 		TestsUtils.logout(driver, "Nombre de usuario");
@@ -269,7 +256,7 @@ public class Tests {
 	// [Prueba13] Hacer una búsqueda escribiendo en el campo un texto que no exista
 	// y comprobar que se muestra la página que corresponde, con la lista de
 	// usuarios vacía
-//	@Test
+	@Test
 	public void test13() throws Exception {
 		driver.get("http://localhost:8090/");
 
@@ -287,7 +274,7 @@ public class Tests {
 	// [Prueba14] Hacer una búsqueda con un texto específico y comprobar que se
 	// muestra la página que corresponde, con la lista de usuarios en los que el
 	// texto especificados sea parte de su nombre, apellidos o de su email.
-//	@Test
+	@Test
 	public void test14() throws Exception {
 		driver.get("http://localhost:8090/");
 
@@ -306,7 +293,7 @@ public class Tests {
 	// [Prueba15] Desde el listado de usuarios de la aplicación, enviar una
 	// invitación de amistad a un usuario. Comprobar que la solicitud de amistad
 	// aparece en el listado de invitaciones (punto siguiente).
-//	@Test
+	@Test
 	public void test15() throws Exception {
 		driver.get("http://localhost:8090/");
 
@@ -347,7 +334,7 @@ public class Tests {
 	// invitación previamente. No debería dejarnos enviar la invitación, se podría
 	// ocultar el botón de enviar invitación o notificar que ya había sido enviada
 	// previamente.
-//	@Test
+	@Test
 	public void test16() throws Exception {
 		driver.get("http://localhost:8090/");
 
@@ -367,7 +354,7 @@ public class Tests {
 
 	// [Prueba17] Mostrar el listado de invitaciones de amistad recibidas. Comprobar
 	// con un listado que contenga varias invitaciones recibidas.
-//	@Test
+	@Test
 	public void test17() throws Exception {
 		driver.get("http://localhost:8090/");
 
@@ -406,7 +393,7 @@ public class Tests {
 	// [Prueba18] Sobre el listado de invitaciones recibidas. Hacer click en el
 	// botón/enlace de una de ellas y comprobar que dicha solicitud desaparece del
 	// listado de invitaciones.
-//	@Test
+	@Test
 	public void test18() throws Exception {
 		driver.get("http://localhost:8090/");
 
@@ -434,25 +421,116 @@ public class Tests {
 
 	// [Prueba19] Mostrar el listado de amigos de un usuario. Comprobar que el
 	// listado contiene los amigos que deben ser.
-//	@Test
+	@Test
 	public void test19() throws Exception {
 		driver.get("http://localhost:8090/");
 
 		TestsUtils.clickOption(driver, "login", "class", "btn btn-primary");
 
 		TestsUtils.fillFormLogin(driver, "user2@email.com", "user2");
-		
+
 		List<WebElement> elementos = TestsUtils.checkElement(driver, "free", "//li[contains(@id, 'users-menu')]/a");
 		elementos.get(0).click();
-		
+
 		elementos = TestsUtils.checkElement(driver, "free", "//a[contains(@href,'friend/list')]");
 		elementos.get(0).click();
-		
+
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", 2);
 		assertTrue(elementos.size() == 1);
-		
+
 		TestsUtils.checkElement(driver, "text", "User1");
-		
+
 		TestsUtils.logout(driver, "Nombre de usuario");
 	}
+
+	// [Prueba20] Visualizar al menos cuatro páginas en Español/Inglés/Español
+	// (comprobando que algunas de las etiquetas cambian al idioma correspondiente).
+	// Ejemplo, Página principal/Opciones Principales de Usuario/Listado de
+	// Usuarios.
+	@Test
+	public void test20() throws Exception {
+		driver.get("http://localhost:8090/");
+
+		System.out.println(TestsUtils.p.getString("welcome.message", TestsUtils.p.getSPANISH()));
+
+		SeleniumUtils.EsperaCargaPagina(driver, "text",
+				TestsUtils.p.getString("welcome.message", TestsUtils.p.getSPANISH()), 2);
+		TestsUtils.changeLanguage(driver, "btnEnglish");
+		SeleniumUtils.EsperaCargaPagina(driver, "text",
+				TestsUtils.p.getString("welcome.message", TestsUtils.p.getENGLISH()), 2);
+		TestsUtils.changeLanguage(driver, "btnSpanish");
+		SeleniumUtils.EsperaCargaPagina(driver, "text",
+				TestsUtils.p.getString("welcome.message", TestsUtils.p.getSPANISH()), 2);
+
+		TestsUtils.clickOption(driver, "signup", "class", "btn btn-primary");
+
+		SeleniumUtils.EsperaCargaPagina(driver, "text",
+				TestsUtils.p.getString("signup.message", TestsUtils.p.getSPANISH()), 2);
+		TestsUtils.changeLanguage(driver, "btnEnglish");
+		SeleniumUtils.EsperaCargaPagina(driver, "text",
+				TestsUtils.p.getString("signup.message", TestsUtils.p.getENGLISH()), 2);
+		TestsUtils.changeLanguage(driver, "btnSpanish");
+		SeleniumUtils.EsperaCargaPagina(driver, "text",
+				TestsUtils.p.getString("signup.message", TestsUtils.p.getSPANISH()), 2);
+
+		TestsUtils.clickOption(driver, "login", "class", "btn btn-primary");
+
+		SeleniumUtils.EsperaCargaPagina(driver, "text",
+				TestsUtils.p.getString("login.message", TestsUtils.p.getSPANISH()), 2);
+		TestsUtils.changeLanguage(driver, "btnEnglish");
+		SeleniumUtils.EsperaCargaPagina(driver, "text",
+				TestsUtils.p.getString("login.message", TestsUtils.p.getENGLISH()), 2);
+		TestsUtils.changeLanguage(driver, "btnSpanish");
+		SeleniumUtils.EsperaCargaPagina(driver, "text",
+				TestsUtils.p.getString("login.message", TestsUtils.p.getSPANISH()), 2);
+
+		TestsUtils.fillFormLogin(driver, "user1@email.com", "user1");
+
+		SeleniumUtils.EsperaCargaPagina(driver, "text",
+				TestsUtils.p.getString("zona.privada.message", TestsUtils.p.getSPANISH()), 2);
+		TestsUtils.changeLanguage(driver, "btnEnglish");
+		SeleniumUtils.EsperaCargaPagina(driver, "text",
+				TestsUtils.p.getString("zona.privada.message", TestsUtils.p.getENGLISH()), 2);
+		TestsUtils.changeLanguage(driver, "btnSpanish");
+		SeleniumUtils.EsperaCargaPagina(driver, "text",
+				TestsUtils.p.getString("zona.privada.message", TestsUtils.p.getSPANISH()), 2);
+
+		TestsUtils.logout(driver, "Nombre de usuario");
+	}
+
+	// [Prueba21] Intentar acceder sin estar autenticado a la opción de listado de
+	// usuarios. Se deberá volver al formulario de login.
+	@Test
+	public void test21() throws Exception {
+		driver.get("http://localhost:8090/user/list");
+		
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Nombre de usuario", 2);
+	}
+
+	// [Prueba22] Intentar acceder sin estar autenticado a la opción de listado de
+	// publicaciones de un usuario estándar. Se deberá volver al formulario de login
+	@Test
+	public void test22() throws Exception {
+		driver.get("http://localhost:8090/friend/list");
+		
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Nombre de usuario", 2);
+	}
+
+	// [Prueba23] Estando autenticado como usuario estándar intentar acceder a una
+	// opción disponible solo para usuarios administradores (Se puede añadir una
+	// opción cualquiera en el menú). Se deberá indicar un mensaje de acción
+	// prohibida.
+	@Test
+	public void test23() throws Exception {
+		driver.get("http://localhost:8090/");
+		
+		TestsUtils.clickOption(driver, "login", "class", "btn btn-primary");
+		
+		TestsUtils.fillFormLogin(driver, "user1@email.com", "user1");
+		
+		driver.get("http://localhost:8090/bbdd/reset");
+		
+		
+	}
+
 }
