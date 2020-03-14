@@ -145,4 +145,14 @@ public class UsersController {
 		User activeUser = usersService.getUserByEmail(email);
 		return "home";
 	}
+	
+	/**
+	 * Metodo get encargado de redirigir al admin a su vista (Prueba 23)
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/admin")
+	public String admin(Model model) {
+		return "admin/admin";
+	}
 }
