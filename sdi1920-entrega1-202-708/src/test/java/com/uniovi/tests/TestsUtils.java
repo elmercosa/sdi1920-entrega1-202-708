@@ -92,10 +92,10 @@ public class TestsUtils {
 		driver.findElement(boton).click();
 	}
 
-	static public void logout(WebDriver driver, String logout) {
-		TestsUtils.clickOption(driver, "logout", "text", logout);
+	static public void logout(WebDriver driver) {
+		TestsUtils.clickOption(driver, "logout", "text", "You have been logged out successfully.");
 
-		TestsUtils.checkElement(driver, "text", logout);
+		TestsUtils.checkElement(driver, "text", "You have been logged out successfully.");
 	}
 
 	static public void changeLanguage(WebDriver driver, String textLanguage) {
