@@ -83,7 +83,7 @@ public class Tests {
 
 		SeleniumUtils.EsperaCargaPagina(driver, "text", "Esto es una zona privada la web", 2);
 
-		TestsUtils.logout(driver, "Nombre de usuario");
+		TestsUtils.logout(driver);
 	}
 
 	/**
@@ -151,7 +151,7 @@ public class Tests {
 
 		SeleniumUtils.EsperaCargaPagina(driver, "text", "Inicio de sesión como admin", 2);
 
-		TestsUtils.logout(driver, "Nombre de usuario");
+		TestsUtils.logout(driver);
 	}
 
 	/**
@@ -167,7 +167,7 @@ public class Tests {
 
 		SeleniumUtils.EsperaCargaPagina(driver, "text", "Inicio de sesión como user", 2);
 
-		TestsUtils.logout(driver, "Nombre de usuario");
+		TestsUtils.logout(driver);
 	}
 
 	/**
@@ -182,11 +182,11 @@ public class Tests {
 
 		TestsUtils.fillFormLogin(driver, "", "user");
 
-		SeleniumUtils.EsperaCargaPagina(driver, "text", "Nombre de usuario", 2);
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Your username and password is invalid.", 2);
 
 		TestsUtils.fillFormLogin(driver, "user1@email.com", "");
 
-		SeleniumUtils.EsperaCargaPagina(driver, "text", "Nombre de usuario", 2);
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Your username and password is invalid.", 2);
 	}
 
 	/**
@@ -201,7 +201,7 @@ public class Tests {
 
 		TestsUtils.fillFormLogin(driver, "user1@email.com", "wrongPassword");
 
-		SeleniumUtils.EsperaCargaPagina(driver, "text", "Nombre de usuario", 2);
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Your username and password is invalid.", 2);
 	}
 
 	/**
@@ -218,7 +218,7 @@ public class Tests {
 
 		SeleniumUtils.EsperaCargaPagina(driver, "text", "Inicio de sesión como admin", 2);
 
-		TestsUtils.logout(driver, "Nombre de usuario");
+		TestsUtils.logout(driver);
 	}
 
 	/**
@@ -253,7 +253,7 @@ public class Tests {
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", 2);
 		assertTrue(elementos.size() == 4);
 
-		TestsUtils.logout(driver, "Nombre de usuario");
+		TestsUtils.logout(driver);
 	}
 
 	/**
@@ -273,7 +273,7 @@ public class Tests {
 		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", 2);
 		assertTrue(elementos.size() == 4);
 
-		TestsUtils.logout(driver, "Nombre de usuario");
+		TestsUtils.logout(driver);
 	}
 
 	/**
@@ -293,7 +293,7 @@ public class Tests {
 
 		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "wrong", 2);
 
-		TestsUtils.logout(driver, "Nombre de usuario");
+		TestsUtils.logout(driver);
 	}
 
 	/**
@@ -314,7 +314,7 @@ public class Tests {
 		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", 2);
 		assertTrue(elementos.size() == 3);
 
-		TestsUtils.logout(driver, "Nombre de usuario");
+		TestsUtils.logout(driver);
 	}
 
 	/**
@@ -340,7 +340,7 @@ public class Tests {
 
 		elementos.get(0).click();
 
-		TestsUtils.logout(driver, "Nombre de usuario");
+		TestsUtils.logout(driver);
 
 		TestsUtils.clickOption(driver, "login", "class", "btn btn-primary");
 
@@ -355,7 +355,7 @@ public class Tests {
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", 2);
 		assertTrue(elementos.size() == 1);
 
-		TestsUtils.logout(driver, "Nombre de usuario");
+		TestsUtils.logout(driver);
 	}
 
 	/**
@@ -380,7 +380,7 @@ public class Tests {
 
 		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "agregar amigo", 2);
 
-		TestsUtils.logout(driver, "Nombre de usuario");
+		TestsUtils.logout(driver);
 	}
 
 	/**
@@ -405,7 +405,7 @@ public class Tests {
 
 		elementos.get(0).click();
 
-		TestsUtils.logout(driver, "Nombre de usuario");
+		TestsUtils.logout(driver);
 
 		TestsUtils.clickOption(driver, "login", "class", "btn btn-primary");
 
@@ -420,7 +420,7 @@ public class Tests {
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", 2);
 		assertTrue(elementos.size() == 2);
 
-		TestsUtils.logout(driver, "Nombre de usuario");
+		TestsUtils.logout(driver);
 	}
 
 	/**
@@ -451,7 +451,7 @@ public class Tests {
 
 		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "User1", 2);
 
-		TestsUtils.logout(driver, "Nombre de usuario");
+		TestsUtils.logout(driver);
 	}
 
 	/**
@@ -477,7 +477,7 @@ public class Tests {
 
 		TestsUtils.checkElement(driver, "text", "User1");
 
-		TestsUtils.logout(driver, "Nombre de usuario");
+		TestsUtils.logout(driver);
 	}
 
 	/**
@@ -532,7 +532,7 @@ public class Tests {
 		SeleniumUtils.EsperaCargaPagina(driver, "text",
 				TestsUtils.p.getString("zona.privada.message", Internationalization.getSPANISH()), 2);
 
-		TestsUtils.logout(driver, "Nombre de usuario");
+		TestsUtils.logout(driver);
 	}
 
 	/**
@@ -595,7 +595,7 @@ public class Tests {
 		assertTrue(elementos.size() == 1);
 		elementos.get(0).click();
 		
-		TestsUtils.logout(driver, "Nombre de usuario");
+		TestsUtils.logout(driver);
 	}
 
 }
