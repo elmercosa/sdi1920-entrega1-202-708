@@ -22,12 +22,23 @@ public class FriendService {
 	@Autowired
 	private UsersRepository usersRepository;
 
+	/**
+	 * Metodo que añade una nueva amistad entre dos usuarios si no existe previamente
+	 * @param from
+	 * @param to
+	 */
 	public void addFriend(User from, User to) {
 		if (friendRepository.findFriendship(from.getId(), to.getId()) == 0) {
 			friendRepository.save(new Friends(from.getId(), to.getId()));
 		}
 	}
 
+	/**
+	 * Metodo que devuelve todos los amigos de un usuario, con paginacion
+	 * @param pageable
+	 * @param user
+	 * @return
+	 */
 	public Page<User> findAllForUser(Pageable pageable, User user) {
 		Page<Friends> list = friendRepository.findFriendsForUser(pageable, user.getId());
 
@@ -46,6 +57,11 @@ public class FriendService {
 		return users;
 	}
 
+	/**
+	 * Metodo que devuelve todos los amigos de un usuario, utilizado para filtrar la lista de usuarios del sistema
+	 * @param user
+	 * @return
+	 */
 	public List<User> findAllFriendsForUser(User user) {
 		List<Friends> list = friendRepository.findAllFriendsForUser(user.getId());
 

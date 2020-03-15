@@ -16,6 +16,9 @@ public class SignUpFormValidator implements Validator {
 		return User.class.equals(aClass);
 	}
 
+	/**
+	 * Metodo encargado de validar el registro de los usuarios
+	 */
 	@Override
 	public void validate(Object target, Errors errors) {
 		User user = (User) target;
