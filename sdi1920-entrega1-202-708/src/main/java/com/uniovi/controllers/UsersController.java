@@ -1,7 +1,6 @@
 package com.uniovi.controllers;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -10,14 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,12 +37,14 @@ public class UsersController {
 
 	@Autowired
 	private SignUpFormValidator signUpFormValidator;
-	
+
 	@Autowired
 	private FriendService friendService;
 
 	/**
-	 * Metodo encargado de responer a la peticion para ver la lista de usuarios del sistema, exceptuando los administradores y el usuario actual de sesion
+	 * Metodo encargado de responer a la peticion para ver la lista de usuarios del
+	 * sistema, exceptuando los administradores y el usuario actual de sesion
+	 * 
 	 * @param model
 	 * @param pageable
 	 * @param principal
@@ -71,23 +68,26 @@ public class UsersController {
 	}
 
 	/**
-	 * Metodo privado encargado de filtrar la pagina actual de usuarios para no mostrar el boton de agregar amigo si ya se ha enviado la peticion o ya son amigos
-	 * @param user usuario en sesion
+	 * Metodo privado encargado de filtrar la pagina actual de usuarios para no
+	 * mostrar el boton de agregar amigo si ya se ha enviado la peticion o ya son
+	 * amigos
+	 * 
+	 * @param user  usuario en sesion
 	 * @param users pagina actual de usuarios
 	 * @return lista filtrada
 	 */
 	private List<User> comprobarPeticiones(User user, List<User> users) {
 		Set<User> friendRequest = user.getFriendrequest();
 		for (User user2 : users) {
-			if(friendRequest.contains(user2)) {
+			if (friendRequest.contains(user2)) {
 				user2.setFriendRequest(true);
-			}else {
+			} else {
 				user2.setFriendRequest(false);
 			}
 		}
 		List<User> amigos = friendService.findAllFriendsForUser(user);
 		for (User user2 : users) {
-			if(amigos.contains(user2)) {
+			if (amigos.contains(user2)) {
 				user2.setFriendRequest(true);
 			}
 		}
@@ -95,7 +95,8 @@ public class UsersController {
 	}
 
 	/**
-	 * Metodo get encargado de responder a la peticion para registrar un usuario 
+	 * Metodo get encargado de responder a la peticion para registrar un usuario
+	 * 
 	 * @param model
 	 * @return
 	 */
@@ -106,7 +107,9 @@ public class UsersController {
 	}
 
 	/**
-	 * Metodo post encargado de responder a la peticion del formulario de registro para guardar el nuevo usuario
+	 * Metodo post encargado de responder a la peticion del formulario de registro
+	 * para guardar el nuevo usuario
+	 * 
 	 * @param user
 	 * @param result
 	 * @return
@@ -124,30 +127,37 @@ public class UsersController {
 	}
 
 	/**
-	 * Metodo get encargado de responder a la peticion para iniciar sesion
+	 * Metodo get encargado de responder a la peticion para iniciar sesion, devuelve
+	 * mensajes de error si falla el login y cuando se desloguea el usuario
+	 * 
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login(Model model) {
+	public String login(Model model, String error, String logout) {
+		if (error != null)
+			model.addAttribute("error", "Your username and password is invalid.");
+		if (logout != null)
+			model.addAttribute("message", "You have been logged out successfully.");
+
 		return "login";
 	}
 
 	/**
-	 * Metodo get encargado de redirigir al usuario que inicia sesion a la pagina home
+	 * Metodo get encargado de redirigir al usuario que inicia sesion a la pagina
+	 * home
+	 * 
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
 	public String home(Model model) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String email = auth.getName();
-		User activeUser = usersService.getUserByEmail(email);
 		return "home";
 	}
-	
+
 	/**
 	 * Metodo get encargado de redirigir al admin a su vista (Prueba 23)
+	 * 
 	 * @param model
 	 * @return
 	 */

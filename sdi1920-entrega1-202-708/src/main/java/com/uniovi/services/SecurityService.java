@@ -18,6 +18,10 @@ public class SecurityService {
 	private UserDetailsService userDetailsService;
 	private static final Logger logger = LoggerFactory.getLogger(SecurityService.class);
 
+	/**
+	 * Metodo que devuelve el nombre del usuario en sesion
+	 * @return
+	 */
 	public String findLoggedInDni() {
 		Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
 		if (userDetails instanceof UserDetails) {
@@ -26,6 +30,11 @@ public class SecurityService {
 		return null;
 	}
 
+	/**
+	 * Metodo que logea automaticamente a un usuario despues de registrarse
+	 * @param email
+	 * @param password
+	 */
 	public void autoLogin(String email, String password) {
 		UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 

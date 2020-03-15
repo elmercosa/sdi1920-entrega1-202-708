@@ -23,6 +23,9 @@ public class DataBaseService {
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+	/**
+	 * Metodo que hace un reset de la base de datos y añade al admin automaticamente despues
+	 */
 	public void resetDataBase() {
 		friendRepository.deleteAll();
 		usersRepository.deleteAll();
