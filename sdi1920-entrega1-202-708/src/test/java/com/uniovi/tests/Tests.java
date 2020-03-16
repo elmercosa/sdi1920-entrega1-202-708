@@ -24,7 +24,7 @@ import com.uniovi.services.UsersService;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 
 public class Tests {
-	
+
 	@Autowired
 	private static UsersService usersService = new UsersService();
 
@@ -580,7 +580,69 @@ public class Tests {
 
 		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "Solo puedes ver esto si eres admin", 2);
 	}
-	
+
+	/**
+	 * [Prueba24] Ir al formulario crear publicaciones, rellenarla con datos válidos
+	 * y pulsar el botón Submit. Comprobar que la publicación sale en el listado de
+	 * publicaciones de dicho usuario.
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void test24() throws Exception {
+		TestsUtils.clickOption(driver, "login", "class", "btn btn-primary");
+		
+		TestsUtils.fillFormLogin(driver, "user1@email.com", "user1");
+		
+		List<WebElement> elementos = TestsUtils.checkElement(driver, "free", "//li[contains(@id, 'post-menu')]/a");
+		elementos.get(0).click();
+
+		elementos = TestsUtils.checkElement(driver, "free", "//a[contains(@href,'post/add')]");
+		elementos.get(0).click();
+		
+		TestsUtils.fillFormPost(driver, "Prueba", "Nota de prueba");
+		
+		elementos = TestsUtils.checkElement(driver, "free", "//li[contains(@id, 'post-menu')]/a");
+		elementos.get(0).click();
+
+		elementos = TestsUtils.checkElement(driver, "free", "//a[contains(@href,'post/list')]");
+		elementos.get(0).click();
+		
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Prueba", 2);
+		
+		TestsUtils.logout(driver);
+	}
+
+	/**
+	 * [Prueba25] Ir al formulario de crear publicaciones, rellenarla con datos
+	 * inválidos (campo título vacío) y pulsar el botón Submit. Comprobar que se
+	 * muestra el mensaje de campo obligatorio.
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void test25() throws Exception {
+TestsUtils.clickOption(driver, "login", "class", "btn btn-primary");
+		
+		TestsUtils.fillFormLogin(driver, "user1@email.com", "user1");
+		
+		List<WebElement> elementos = TestsUtils.checkElement(driver, "free", "//li[contains(@id, 'post-menu')]/a");
+		elementos.get(0).click();
+
+		elementos = TestsUtils.checkElement(driver, "free", "//a[contains(@href,'post/add')]");
+		elementos.get(0).click();
+		
+		TestsUtils.fillFormPost(driver, "", "Nota sin título");
+		
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Este campo no puede ser vacío", 2);
+		
+		TestsUtils.fillFormPost(driver, "Nota sin descripción", "");
+		
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Este campo no puede ser vacío", 2);
+		
+		TestsUtils.logout(driver);
+	}
+
 	/**
 	 * Borrar BBDD
 	 * 
@@ -588,13 +650,13 @@ public class Tests {
 	 */
 	public static void bbdd() {
 		TestsUtils.clickOption(driver, "login", "class", "btn btn-primary");
-		
+
 		TestsUtils.fillFormLogin(driver, "admin@email.com", "admin");
-		
+
 		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "@href", "bbdd/reset", 2);
 		assertTrue(elementos.size() == 1);
 		elementos.get(0).click();
-		
+
 		TestsUtils.logout(driver);
 	}
 
