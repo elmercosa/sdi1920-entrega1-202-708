@@ -591,25 +591,25 @@ public class Tests {
 	@Test
 	public void test24() throws Exception {
 		TestsUtils.clickOption(driver, "login", "class", "btn btn-primary");
-		
+
 		TestsUtils.fillFormLogin(driver, "user1@email.com", "user1");
-		
+
 		List<WebElement> elementos = TestsUtils.checkElement(driver, "free", "//li[contains(@id, 'post-menu')]/a");
 		elementos.get(0).click();
 
 		elementos = TestsUtils.checkElement(driver, "free", "//a[contains(@href,'post/add')]");
 		elementos.get(0).click();
-		
+
 		TestsUtils.fillFormPost(driver, "Prueba", "Nota de prueba");
-		
+
 		elementos = TestsUtils.checkElement(driver, "free", "//li[contains(@id, 'post-menu')]/a");
 		elementos.get(0).click();
 
 		elementos = TestsUtils.checkElement(driver, "free", "//a[contains(@href,'post/list')]");
 		elementos.get(0).click();
-		
+
 		SeleniumUtils.EsperaCargaPagina(driver, "text", "Prueba", 2);
-		
+
 		TestsUtils.logout(driver);
 	}
 
@@ -622,23 +622,47 @@ public class Tests {
 	 */
 	@Test
 	public void test25() throws Exception {
-TestsUtils.clickOption(driver, "login", "class", "btn btn-primary");
-		
+		TestsUtils.clickOption(driver, "login", "class", "btn btn-primary");
+
 		TestsUtils.fillFormLogin(driver, "user1@email.com", "user1");
-		
+
 		List<WebElement> elementos = TestsUtils.checkElement(driver, "free", "//li[contains(@id, 'post-menu')]/a");
 		elementos.get(0).click();
 
 		elementos = TestsUtils.checkElement(driver, "free", "//a[contains(@href,'post/add')]");
 		elementos.get(0).click();
-		
+
 		TestsUtils.fillFormPost(driver, "", "Nota sin título");
-		
+
 		SeleniumUtils.EsperaCargaPagina(driver, "text", "Este campo no puede ser vacío", 2);
-		
+
 		TestsUtils.fillFormPost(driver, "Nota sin descripción", "");
-		
+
 		SeleniumUtils.EsperaCargaPagina(driver, "text", "Este campo no puede ser vacío", 2);
+
+		TestsUtils.logout(driver);
+	}
+
+	/**
+	 * [Prueba26] Mostrar el listado de publicaciones de un usuario y comprobar que
+	 * se muestran todas las que existen para dicho usuario.
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void test26() throws Exception {
+		TestsUtils.clickOption(driver, "login", "class", "btn btn-primary");
+
+		TestsUtils.fillFormLogin(driver, "user1@email.com", "user1");
+		
+		List<WebElement> elementos = TestsUtils.checkElement(driver, "free", "//li[contains(@id, 'post-menu')]/a");
+		elementos.get(0).click();
+
+		elementos = TestsUtils.checkElement(driver, "free", "//a[contains(@href,'post/list')]");
+		elementos.get(0).click();
+
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", 2);
+		assertTrue(elementos.size() == 1);
 		
 		TestsUtils.logout(driver);
 	}
