@@ -676,17 +676,17 @@ public class Tests {
 		TestsUtils.clickOption(driver, "login", "class", "btn btn-primary");
 
 		TestsUtils.fillFormLogin(driver, "user2@email.com", "user2");
-		
+
 		List<WebElement> elementos = TestsUtils.checkElement(driver, "free", "//li[contains(@id, 'users-menu')]/a");
 		elementos.get(0).click();
 
 		elementos = TestsUtils.checkElement(driver, "free", "//a[contains(@href,'friend/list')]");
 		elementos.get(0).click();
-		
+
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "@href", "post/list/friend/", 2);
 		assertTrue(elementos.size() == 1);
 		elementos.get(0).click();
-		
+
 		TestsUtils.logout(driver);
 	}
 
@@ -702,11 +702,41 @@ public class Tests {
 		TestsUtils.clickOption(driver, "login", "class", "btn btn-primary");
 
 		TestsUtils.fillFormLogin(driver, "user2@email.com", "user2");
-		
+
 		driver.get("http://localhost:8090/post/list/friend/user3@email.com");
-		
+
 		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "Publicaciones", 2);
+
+		TestsUtils.logout(driver);
+	}
+
+	/**
+	 * [Prueba31] Mostrar el listado de usuarios y comprobar que se muestran todos
+	 * los que existen en el sistema.
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void test31() throws Exception {
+		TestsUtils.clickOption(driver, "login", "class", "btn btn-primary");
+
+		TestsUtils.fillFormLogin(driver, "admin@email.com", "admin");
+
+		List<WebElement> elementos = TestsUtils.checkElement(driver, "free", "//li[contains(@id, 'users-menu')]/a");
+		elementos.get(0).click();
+
+		elementos = TestsUtils.checkElement(driver, "free", "//a[contains(@href,'user/list/admin')]");
+		elementos.get(0).click();
+
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", 2);
+		assertTrue(elementos.size() == 5);
 		
+		elementos = TestsUtils.checkElement(driver, "free", "//a[contains(@class, 'page-link')]");
+		elementos.get(2).click();
+		
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", 2);
+		assertTrue(elementos.size() == 1);
+
 		TestsUtils.logout(driver);
 	}
 
