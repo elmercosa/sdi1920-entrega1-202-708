@@ -66,6 +66,27 @@ public class UsersController {
 		model.addAttribute("page", users);
 		return "user/list";
 	}
+	
+	/**
+	 * Metodo encargado de responer a la peticion para ver la lista de usuarios del
+	 * sistema, exceptuando los administradores y el usuario actual de sesion
+	 * 
+	 * @param model
+	 * @param pageable
+	 * @param principal
+	 * @param searchText Texto de busqueda de usuarios
+	 * @return
+	 */
+	@RequestMapping("/user/list/admin")
+	public String getListadoAdmin(Model model, Pageable pageable, Principal principal) {
+		String email = principal.getName();
+		User user = usersService.getUserByEmail(email);
+		Page<User> users = new PageImpl<User>(new LinkedList<User>());
+		users = usersService.getUsersAdmin(pageable);
+		model.addAttribute("usersList", comprobarPeticiones(user, users.getContent()));
+		model.addAttribute("page", users);
+		return "admin/list";
+	}
 
 	/**
 	 * Metodo privado encargado de filtrar la pagina actual de usuarios para no

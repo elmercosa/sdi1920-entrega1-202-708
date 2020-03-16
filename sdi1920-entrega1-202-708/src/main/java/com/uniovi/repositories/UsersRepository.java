@@ -27,6 +27,17 @@ public interface UsersRepository extends CrudRepository<User, Long> {
 	 */
 	@Query("SELECT u FROM User u WHERE u != ?1 AND u.role != 'ROLE_ADMIN'")
 	Page<User> listUsers(Pageable pageable, User user);
+	
+	/**
+	 * Metodo que devuelve la lista de usuarios del sistema que no sean ni el
+	 * usuario actual ni los admin con paginacion, version ADMIN
+	 * 
+	 * @param pageable
+	 * @param user
+	 * @return
+	 */
+	@Query("SELECT u FROM User u")
+	Page<User> listUsersAdmin(Pageable pageable);
 
 	/**
 	 * Metodo que devuelve la lista de usuarios del sistema que no sean ni el

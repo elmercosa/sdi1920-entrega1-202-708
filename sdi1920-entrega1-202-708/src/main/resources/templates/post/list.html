@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head" />
+<body>
+	<nav th:replace="fragments/nav" />
+
+	<div class="container">
+		<h2>Publicaciones</h2>
+		<div class="table-responsive">
+			<table class="table table-hover" id="tablePost">
+				<thead>
+					<tr>
+						<th>Titulo</th>
+						<th>Fecha</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="post : ${postList}">
+						<td th:text="${post.titulo}"></td>
+						<td th:text="${post.date}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<footer th:replace="fragments/pagination" />
+	</div>
+
+	<footer th:replace="fragments/footer" />
+</body>
+</html>

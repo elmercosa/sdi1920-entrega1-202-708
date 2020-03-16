@@ -5,7 +5,10 @@
 	<!-- Barra de Navegación superior -->
 	<nav th:replace="fragments/nav" />
 	<div class="container">
-		<h2 th:text="#{amigos.titulo}">Usuarios</h2>
+		<h2 th:text="#{user.list.titulo}">Usuarios</h2>
+		<p th:text="#{user.list.descipcion}">Los usuarios que actualmente figuran en el sistema son los
+			siguientes:</p>
+		</script>
 		<div class="table-responsive">
 			<table class="table table-hover" th:fragment="tableUsers"
 				id="tableUsers" > 
@@ -14,7 +17,7 @@
 						<th th:text="#{user.list.correo}">Email</th>
 						<th th:text="#{user.list.nombre}">Nombre</th>
 						<th th:text="#{user.list.apellidos}">Apellidos</th>
-						<th></th>
+						<th class="col-md-1"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -22,8 +25,6 @@
 						<td th:text="${user.email}">example@example</td>
 						<td th:text="${user.name}">Nombre del usuario</td>
 						<td th:text="${user.lastName}">Apellidos del usuario</td>
-						<td><a th:href="${'/post/list/friend/' + user.email}"> Ver publicaciones
-						</a> </td>
 					</tr>
 				</tbody>
 			</table>

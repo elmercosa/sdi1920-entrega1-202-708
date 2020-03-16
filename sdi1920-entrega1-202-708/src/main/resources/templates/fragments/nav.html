@@ -25,9 +25,16 @@
 								Usuarios</a></li>
 						<li><a href="/friend/list" th:text="#{nav.amigos}">Ver
 								Amigos</a></li>
+						<li><a href="/user/list/admin" sec:authorize="hasRole('ROLE_ADMIN')" >Ver Usuarios (ADMIN)</a></li>
 					</ul></li>
 				<li><a id="bbdd" href="/bbdd/reset" sec:authorize="hasRole('ROLE_ADMIN')">BBDD</a></li>
 				<li><a id="admin" href="/admin" sec:authorize="hasRole('ROLE_ADMIN')">admin</a></li>
+				<li id="post-menu" class="dropdown"sec:authorize="isAuthenticated()">
+					<a class="dropdown-toggle"data-toggle="dropdown" href="#"> Publicaciones <spanclass="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="/post/add" >Nueva publicacion</a></li>
+						<li><a href="/post/list" >Ver publicaciones</a></li>
+					</ul></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown"><a id="btnLanguage" href="

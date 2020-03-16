@@ -33,6 +33,18 @@ public class UsersService {
 	}
 	
 	/**
+	 * Meodo que devuelve todos los usuarios del sistema, con paginacion, version ADMIN
+	 * @param pageable
+	 * @param user
+	 * @return
+	 */
+	public Page<User> getUsersAdmin(Pageable pageable) {
+		Page<User> users = new PageImpl<User>(new LinkedList<User>());
+		users = usersRepository.listUsersAdmin(pageable);
+		return users;
+	}
+	
+	/**
 	 * Metodo que busca a los usuarios del sistema que contengan una cadena pasada por parametro en su nombre, apellido o email.
 	 * @param pageable
 	 * @param user
