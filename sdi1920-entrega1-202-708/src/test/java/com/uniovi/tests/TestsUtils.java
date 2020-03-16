@@ -105,5 +105,19 @@ public class TestsUtils {
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", textLanguage, 2);
 		elementos.get(0).click();
 	}
+	
+	static public void fillFormPost(WebDriver driver, String titlep, String descriptionp) {
+		WebElement title = driver.findElement(By.name("titulo"));
+		title.click();
+		title.clear();
+		title.sendKeys(titlep);
+		WebElement description = driver.findElement(By.name("description"));
+		description.click();
+		description.clear();
+		description.sendKeys(descriptionp);
+		// Pulsar el boton de Alta.
+		By boton = By.className("btn");
+		driver.findElement(boton).click();
+	}
 
 }
