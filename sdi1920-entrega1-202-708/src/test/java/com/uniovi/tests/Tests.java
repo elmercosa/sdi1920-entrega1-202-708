@@ -16,8 +16,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.uniovi.entities.User;
-import com.uniovi.services.RolesService;
 import com.uniovi.services.UsersService;
 
 //Ordenamos las pruebas por el nombre del método
@@ -654,7 +652,7 @@ public class Tests {
 		TestsUtils.clickOption(driver, "login", "class", "btn btn-primary");
 
 		TestsUtils.fillFormLogin(driver, "user1@email.com", "user1");
-		
+
 		List<WebElement> elementos = TestsUtils.checkElement(driver, "free", "//li[contains(@id, 'post-menu')]/a");
 		elementos.get(0).click();
 
@@ -663,6 +661,51 @@ public class Tests {
 
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", 2);
 		assertTrue(elementos.size() == 1);
+
+		TestsUtils.logout(driver);
+	}
+
+	/**
+	 * [Prueba27] Mostrar el listado de publicaciones de un usuario amigo y
+	 * comprobar que se muestran todas las que existen para dicho usuario.
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void test27() throws Exception {
+		TestsUtils.clickOption(driver, "login", "class", "btn btn-primary");
+
+		TestsUtils.fillFormLogin(driver, "user2@email.com", "user2");
+		
+		List<WebElement> elementos = TestsUtils.checkElement(driver, "free", "//li[contains(@id, 'users-menu')]/a");
+		elementos.get(0).click();
+
+		elementos = TestsUtils.checkElement(driver, "free", "//a[contains(@href,'friend/list')]");
+		elementos.get(0).click();
+		
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "@href", "post/list/friend/", 2);
+		assertTrue(elementos.size() == 1);
+		elementos.get(0).click();
+		
+		TestsUtils.logout(driver);
+	}
+
+	/**
+	 * [Prueba28] Utilizando un acceso vía URL u otra alternativa, tratar de listar
+	 * las publicaciones de un usuario que no sea amigo del usuario identificado en
+	 * sesión. Comprobar que el sistema da un error de autorización.
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void test28() throws Exception {
+		TestsUtils.clickOption(driver, "login", "class", "btn btn-primary");
+
+		TestsUtils.fillFormLogin(driver, "user2@email.com", "user2");
+		
+		driver.get("http://localhost:8090/post/list/friend/user3@email.com");
+		
+		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "Publicaciones", 2);
 		
 		TestsUtils.logout(driver);
 	}
