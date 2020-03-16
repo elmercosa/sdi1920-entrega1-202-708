@@ -705,7 +705,7 @@ public class Tests {
 
 		driver.get("http://localhost:8090/post/list/friend/user3@email.com");
 
-		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "Publicaciones", 2);
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Bienvenidos", 2);
 
 		TestsUtils.logout(driver);
 	}
