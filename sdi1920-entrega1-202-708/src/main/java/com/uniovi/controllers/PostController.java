@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.uniovi.entities.Post;
 import com.uniovi.entities.User;
+import com.uniovi.services.FriendService;
 import com.uniovi.services.PostService;
 import com.uniovi.services.UsersService;
 import com.uniovi.validators.PostFormValidator;
@@ -29,6 +30,9 @@ public class PostController {
 	private UsersService usersService;
 	@Autowired
 	private PostFormValidator postFormValidator;
+	@Autowired
+	private FriendService friendService ;
+	
 
 	@RequestMapping("/post/list")
 	public String getList(Model model, Principal principal, Pageable pageable) {
@@ -66,66 +70,14 @@ public class PostController {
 	public String getListForFriend(Model model, Principal principal, Pageable pageable, @PathVariable String email) {
 		Page<Post> posts = new PageImpl<Post>(new LinkedList<Post>());
 		User user = usersService.getUserByEmail(email);
-		posts = postService.getUserPosts(pageable, user);
-		model.addAttribute("postList", posts.getContent());
-		model.addAttribute("page", posts);
-		return "post/friend";
+		User actual = usersService.getUserByEmail(principal.getName());
+		if(friendService.findFriendship(actual, user)) {
+			posts = postService.getUserPosts(pageable, user);
+			model.addAttribute("postList", posts.getContent());
+			model.addAttribute("page", posts);
+			return "post/friend";
+		}else {
+			return "/home";
+		}
 	}
-
-//	@RequestMapping("/mark/details/{id}")
-//	public String getDetail(Model model, @PathVariable Long id) {
-//		model.addAttribute("mark", marksService.getMark(id));
-//		return "mark/details";
-//	}
-//
-//	@RequestMapping("/mark/delete/{id}")
-//	public String deleteMark(@PathVariable Long id) {
-//		marksService.deleteMark(id);
-//		return "redirect:/mark/list";
-//	}
-//
-//	@RequestMapping(value = "/mark/add")
-//	public String getMark(Model model) {
-//		model.addAttribute("mark", new Mark());
-//		model.addAttribute("usersList", usersService.getUsers());
-//		return "mark/add";
-//	}
-//
-//	@RequestMapping(value = "/mark/edit/{id}")
-//	public String getEdit(Model model, @PathVariable Long id) {
-//		model.addAttribute("usersList", usersService.getUsers());
-//		return "mark/edit";
-//	}
-//
-//	@RequestMapping(value = "/mark/edit/{id}", method = RequestMethod.POST)
-//	public String setEdit(Model model, @PathVariable Long id, @ModelAttribute Mark mark) {
-//		Mark original = marksService.getMark(id);
-//		// modificar solo score y description
-//		original.setScore(mark.getScore());
-//		original.setDescription(mark.getDescription());
-//		marksService.addMark(original);
-//		return "redirect:/mark/details/" + id;
-//	}
-//
-//	@RequestMapping("/mark/list/update")
-//	public String updateList(Model model, Pageable pageable ,Principal principal) {
-//		String dni = principal.getName(); // DNI es el name de la autenticación
-//		User user = usersService.getUserByDni(dni);
-//		Page<Mark> marks = marksService.getMarksForUser(pageable, user);
-//		model.addAttribute("markList", marks.getContent());
-//		return "mark/list :: tableMarks";
-//	}
-//
-//	@RequestMapping(value = "/mark/{id}/resend", method = RequestMethod.GET)
-//	public String setResendTrue(Model model, @PathVariable Long id) {
-//		marksService.setMarkResend(true, id);
-//		return "redirect:/mark/list";
-//	}
-//
-//	@RequestMapping(value = "/mark/{id}/noresend", method = RequestMethod.GET)
-//	public String setResendFalse(Model model, @PathVariable Long id) {
-//		marksService.setMarkResend(false, id);
-//		return "redirect:/mark/list";
-//	}
-
 }

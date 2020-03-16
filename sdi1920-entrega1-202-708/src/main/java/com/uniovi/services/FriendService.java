@@ -32,6 +32,15 @@ public class FriendService {
 			friendRepository.save(new Friends(from.getId(), to.getId()));
 		}
 	}
+	
+	/**
+	 * Metodo que busca si el usuario actual de ssesion es amigo de otro usuario
+	 * @param from
+	 * @param to
+	 */
+	public boolean findFriendship(User from, User to) {
+		return friendRepository.findFriendship(from.getId(), to.getId()) != 0;
+	}
 
 	/**
 	 * Metodo que devuelve todos los amigos de un usuario, con paginacion
